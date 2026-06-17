@@ -581,16 +581,16 @@ footer a:hover{
 
     line-height:1;
 
-    color:rgba(0,0,0,.05);
+    color:rgba(0, 0, 0, 0.05);
 
     pointer-events:none;
 
     user-select:none;
 
-    z-index:-2;
+    z-index:-1;
 
     filter:
-        blur(1px);
+        blur(0.2px);
 
 }
 
