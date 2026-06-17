@@ -29,7 +29,7 @@ body {
 }
 
 /* ==========================================
-   ELEMENTOS DE FONDO Y LOGO
+   ELEMENTOS DE FONDO Y LOGO DESINTEGRABLE
    ========================================== */
 .background-glow {
     position: fixed;
@@ -65,17 +65,13 @@ body {
     top: 40px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 10; /* Z-index bajo el visor pero visible arriba de la galería base */
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(3rem, 7vw, 7rem);
+    font-size: clamp(3.5rem, 8vw, 7rem);
     font-weight: 400;
-    letter-spacing: 1px;
-    opacity: .8;
-    transition: 1s;
-}
-
-.moon-logo:hover {
-    letter-spacing: 8px;
+    letter-spacing: 2px;
+    will-change: transform, opacity; /* Forzar renderizado por GPU */
+    user-select: none;
 }
 
 /* ==========================================
@@ -90,12 +86,12 @@ body {
     position: absolute;
     transition: opacity .8s ease;
     transform: translateY(var(--floatY, 0px)) rotate(var(--rotate, 0deg));
-    will-change: transform; /* Optimización de hardware para animaciones fluidas */
+    will-change: transform;
 }
 
 .art img {
     width: 100%;
-    height: auto; /* Permite que el ratio nativo de la imagen adaptativa se mantenga */
+    height: auto;
     display: block;
     object-fit: cover;
     border-radius: 28px;
@@ -265,9 +261,9 @@ body {
     opacity: 1;
 }
 
-/* ==========================================
+/* ==========================
    FOOTER
-   ========================================== */
+========================== */
 footer {
     position: fixed;
     right: 40px;
@@ -297,8 +293,6 @@ footer a:hover {
     }
     
     .art {
-        /* Se remueve el ancho estático; ahora el tamaño orgánico 
-           se gestiona con precisión matemática en JS */
         transition: opacity .5s ease;
     }
     
@@ -307,7 +301,7 @@ footer a:hover {
     }
 
     .viewer img {
-        max-height: 55vh; /* Evita que la imagen pise el texto explicativo en pantallas verticales */
+        max-height: 55vh; 
         border-radius: 20px;
     }
 

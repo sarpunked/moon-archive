@@ -1,5 +1,5 @@
 // ==========================================
-// MOON ARCHIVE V3 - Fairy Dreamy Edition (Optimized)
+// MOON ARCHIVE V3 - Fairy Dreamy Edition (Optimized & Clean Scroll)
 // ==========================================
 
 const archive = document.getElementById("archive");
@@ -9,8 +9,64 @@ const viewerTitle = document.getElementById("viewerTitle");
 const viewerDescription = document.getElementById("viewerDescription");
 const closeViewer = document.getElementById("closeViewer");
 const cursor = document.querySelector(".cursor");
+const moonLogo = document.querySelector(".moon-logo");
 
-let artworksData = []; // Guardará los datos del fetch para usarlos al redimensionar
+let artworksData = []; 
+
+// ==========================================
+// EFECTO: DESINTEGRACIÓN DE TÍTULO POR SCROLL
+// ==========================================
+function initLogoSplitting() {
+    // Dividir el texto del logo en letras envueltas en spans
+    const text = moonLogo.textContent.trim();
+    moonLogo.innerHTML = "";
+    
+    [...text].forEach((char, index) => {
+        const span = document.createElement("span");
+        span.textContent = char;
+        span.style.display = "inline-block";
+        span.style.transition = "transform 0.1s linear, opacity 0.1s linear";
+        moonLogo.appendChild(span);
+    });
+}
+
+window.addEventListener("scroll", () => {
+    const scrollTop = window.scrollY;
+    const maxScroll = 400; // Distancia de scroll donde se desintegra por completo
+    const progress = Math.min(scrollTop / maxScroll, 1);
+    
+    const letters = moonLogo.querySelectorAll("span");
+    
+    // Si ya bajó lo suficiente, ocultamos por completo el contenedor para evitar clics fantasma
+    if (progress >= 1) {
+        moonLogo.style.opacity = "0";
+        moonLogo.style.pointerEvents = "none";
+    } else {
+        moonLogo.style.opacity = "1";
+        moonLogo.style.pointerEvents = "auto";
+    }
+
+    letters.forEach((letter, index) => {
+        // Direcciones aleatorias controladas para cada letra de "m-o-o-n"
+        const directions = [
+            { x: -80, y: -40, rotate: -35 }, // m
+            { x: -30, y: -70, rotate: 20 },  // o
+            { x: 30, y: -70, rotate: -20 },  // o
+            { x: 80, y: -40, rotate: 35 }    // n
+        ];
+        
+        const dir = directions[index] || { x: 0, y: -50, rotate: 0 };
+        
+        // Multiplicamos el destino por el progreso del scroll actual
+        const moveX = dir.x * progress;
+        const moveY = dir.y * progress;
+        const rotate = dir.rotate * progress;
+        const opacity = 1 - progress; // Se desvanece a medida que baja
+
+        letter.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotate(${rotate}deg)`;
+        letter.style.opacity = opacity;
+    });
+});
 
 // ==========================================
 // CONSTELACIÓN GUIADA (Adaptativa)
@@ -23,14 +79,14 @@ function generateConstellation(count) {
     for (let i = 0; i < count; i++) {
         if (isMobile) {
             positions.push({
-                x: center - 110, // Centrado para el contenedor de 220px en móvil
-                y: 200 + i * 360
+                x: center - 110, 
+                y: 220 + i * 360 // Espaciado inicial un poco más abajo para no chocar con el logo al inicio
             });
         } else {
             const wave = Math.sin(i * 1.15) * 220;
             positions.push({
-                x: center + wave - 160, // Centrado para pantallas grandes
-                y: 250 + i * 450
+                x: center + wave - 160, 
+                y: 300 + i * 450 // Da espacio al logo en la pantalla de inicio
             });
         }
     }
@@ -41,10 +97,9 @@ function generateConstellation(count) {
 // RENDERIZAR OBRAS (Con soporte Responsive real)
 // ==========================================
 function renderArtworks(artworks) {
-    archive.innerHTML = ""; // Limpiar galería previa si se redimensiona
+    archive.innerHTML = ""; 
     const constellation = generateConstellation(artworks.length);
     
-    // Altura dinámica del contenedor base
     const spacing = window.innerWidth < 768 ? 380 : 500;
     archive.style.minHeight = `${artworks.length * spacing}px`;
 
@@ -52,7 +107,6 @@ function renderArtworks(artworks) {
         const card = document.createElement("div");
         card.classList.add("art");
 
-        // Tamaño aleatorio/orgánico controlado
         const baseSize = window.innerWidth < 768 ? 220 : 280;
         const size = baseSize + Math.sin(index) * 30 + Math.random() * 20;
         
@@ -61,11 +115,6 @@ function renderArtworks(artworks) {
         card.style.top = `${constellation[index].y}px`;
         card.dataset.index = index;
 
-        /* Explicación de la magia adaptativa:
-           Si tus objetos de imagen en JSON tienen diferentes tamaños (ej. art.image_small, art.image_medium, art.image),
-           el atributo srcset le dice al navegador cuál descargar según el ancho real disponible.
-           Si no los tienes separados, por ahora usará 'art.image' por defecto.
-        */
         const imgSmall = art.image_small || art.image;
         const imgMedium = art.image_medium || art.image;
         const imgLarge = art.image || art.image;
@@ -86,19 +135,18 @@ function renderArtworks(artworks) {
     });
 }
 
-// Cargar Datos del JSON
+// Inicialización de Carga
 fetch("data/artworks.json")
     .then(res => res.json())
     .then(artworks => {
         artworksData = artworks;
+        initLogoSplitting();
         renderArtworks(artworksData);
         animateArtworks();
     })
     .catch(err => console.error("Error cargando obras:", err));
 
-// ==========================================
-// EVENTO RESIZE CONTROLADO (Debounce)
-// ==========================================
+// Evento Resize Controlado (Debounce)
 let resizeTimeout;
 window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
@@ -106,14 +154,13 @@ window.addEventListener("resize", () => {
         if (artworksData.length > 0) {
             renderArtworks(artworksData);
         }
-    }, 250); // Redibuja la constelación de forma suave al cambiar de tamaño
+    }, 250); 
 });
 
 // ==========================================
-// VISOR
+// VISOR MULTIMEDIA
 // ==========================================
 function openArtwork(art) {
-    // Para el visor también usamos el set adaptativo si existiera
     viewerImage.src = art.image; 
     if(art.image_medium) {
         viewerImage.srcset = `${art.image_small} 400w, ${art.image_medium} 800w, ${art.image} 1200w`;
@@ -125,10 +172,11 @@ function openArtwork(art) {
     document.body.style.overflow = "hidden";
 }
 
+// Cerrar visor
 function closeArtwork() {
     viewer.classList.add("hidden");
     document.body.style.overflow = "auto";
-    viewerImage.srcset = ""; // Reset de imágenes
+    viewerImage.srcset = ""; 
 }
 
 closeViewer.addEventListener("click", closeArtwork);
@@ -146,21 +194,17 @@ document.addEventListener("mousemove", e => {
 });
 
 function createHeart(x, y) {
-    if (Math.random() > 0.85) { // Un poco menos saturado para mejorar rendimiento
+    if (Math.random() > 0.85) { 
         const heart = document.createElement("div");
         heart.classList.add("heart");
         heart.innerHTML = "♡";
         heart.style.left = `${x}px`;
         heart.style.top = `${y}px`;
         document.body.appendChild(heart);
-
         setTimeout(() => heart.remove(), 2000);
     }
 }
 
-// ==========================================
-// BURBUJITAS (Optimizadas con RequestAnimationFrame en CSS)
-// ==========================================
 function createBubble() {
     const bubble = document.createElement("div");
     bubble.classList.add("bubble");
@@ -176,9 +220,6 @@ function createBubble() {
 }
 setInterval(createBubble, 2200);
 
-// ==========================================
-// ESTRELLITAS
-// ==========================================
 function createStars(card) {
     for (let i = 0; i < 6; i++) {
         const star = document.createElement("div");
@@ -187,14 +228,11 @@ function createStars(card) {
         star.style.left = `${Math.random() * 100}%`;
         star.style.top = `${Math.random() * 100}%`;
         card.appendChild(star);
-
         setTimeout(() => star.remove(), 1200);
     }
 }
 
-// ==========================================
-// MOVIMIENTO ORGÁNICO
-// ==========================================
+// Movimiento Orgánico Constante
 function animateArtworks() {
     const arts = document.querySelectorAll(".art");
     const time = Date.now();
@@ -211,7 +249,6 @@ function animateArtworks() {
     requestAnimationFrame(animateArtworks);
 }
 
-// ESC Key
 document.addEventListener("keydown", e => {
     if (e.key === "Escape") closeArtwork();
 });
