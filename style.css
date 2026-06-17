@@ -1,653 +1,328 @@
-/* ==========================
-   VARIABLES
-========================== */
-
-:root{
-
-    --bg:#faf7f2;
-
-    --text:#2f2f2f;
-
-    --soft:#d7cfc4;
-
-    --white:#ffffff;
-
+/* ==========================================
+   VARIABLES Y CONFIGURACIÓN BASE
+   ========================================== */
+:root {
+    --bg: #faf7f2;
+    --text: #2f2f2f;
+    --soft: #d7cfc4;
+    --white: #ffffff;
 }
 
-/* ==========================
-   RESET
-========================== */
-
-*{
-
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html{
-
-    scroll-behavior:smooth;
-
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-
-    background:var(--bg);
-
-    color:var(--text);
-
-    overflow-x:hidden;
-
-    min-height:100vh;
-
-    font-family:'Inter',sans-serif;
-
-    cursor:none;
-
-    position:relative;
-
+body {
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    cursor: none;
+    position: relative;
 }
 
-/* ==========================
-   FONDO
-========================== */
-
-.background-glow{
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    z-index:-1;
-
-    background:
-
-    radial-gradient(
-        circle at 20% 20%,
-        rgba(255,255,255,.9),
-        transparent 35%
-    ),
-
-    radial-gradient(
-        circle at 80% 60%,
-        rgba(255,255,255,.4),
-        transparent 40%
-    ),
-
-    radial-gradient(
-        circle at 50% 100%,
-        rgba(255,255,255,.3),
-        transparent 50%
-    );
-
-    filter:blur(60px);
-
+/* ==========================================
+   ELEMENTOS DE FONDO Y LOGO
+   ========================================== */
+.background-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.9), transparent 35%),
+        radial-gradient(circle at 80% 60%, rgba(255,255,255,.4), transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,.3), transparent 50%);
+    filter: blur(60px);
 }
 
-/* ==========================
-   LOGO
-========================== */
-
-.moon-logo{
-
-    position:fixed;
-
-    top:40px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    z-index:1000;
-
-    font-family:'Instrument Serif',serif;
-
-    font-size:clamp(3rem,7vw,7rem);
-
-    font-weight:400;
-
-    letter-spacing:1px;
-
-    opacity:.8;
-
-    transition:1s;
-
+.ascii-bg {
+    position: fixed;
+    left: -220px;
+    top: 50%;
+    transform: translateY(-50%) scale(.70);
+    white-space: pre;
+    font-family: monospace;
+    font-size: 10px;
+    line-height: 1;
+    color: #b6aa9d;
+    opacity: .22;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
 }
 
-.moon-logo:hover{
-
-    letter-spacing:8px;
-
+.moon-logo {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: .8;
+    transition: 1s;
 }
 
-/* ==========================
+.moon-logo:hover {
+    letter-spacing: 8px;
+}
+
+/* ==========================================
+   GALERÍA Y TARJETAS DE ARTE (Optimizado)
+   ========================================== */
+.archive {
+    position: relative;
+    min-height: 520vh;
+}
+
+.art {
+    position: absolute;
+    transition: opacity .8s ease;
+    transform: translateY(var(--floatY, 0px)) rotate(var(--rotate, 0deg));
+    will-change: transform; /* Optimización de hardware para animaciones fluidas */
+}
+
+.art img {
+    width: 100%;
+    height: auto; /* Permite que el ratio nativo de la imagen adaptativa se mantenga */
+    display: block;
+    object-fit: cover;
+    border-radius: 28px;
+    transition: transform 1s ease, filter 1s ease;
+    box-shadow: 0 30px 60px rgba(0,0,0,.08);
+}
+
+.art:hover img {
+    transform: scale(1.03);
+    filter: brightness(1.04);
+}
+
+/* ==========================================
+   EFECTOS VISUALES Y POLVO DE HADAS
+   ========================================== */
+.cursor {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #d4a5c7;
+}
+
+.heart {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    color: #d4a5c7;
+    font-size: 14px;
+    transform: translate(-50%, -50%);
+    animation: heartFloat 2s ease-out forwards;
+}
+
+@keyframes heartFloat {
+    0% {
+        opacity: .9;
+        transform: translate(-50%, -50%) scale(.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -90px) scale(1.8);
+    }
+}
+
+.spark {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: white;
+    pointer-events: none;
+    animation: sparkFade 1.8s linear forwards;
+}
+
+@keyframes sparkFade {
+    from { opacity: .8; transform: scale(1); }
+    to { opacity: 0; transform: scale(5); }
+}
+
+.bubble {
+    position: fixed;
+    bottom: -80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.4);
+    pointer-events: none;
+    animation: floatBubble linear forwards;
+}
+
+@keyframes floatBubble {
+    from { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: .6; }
+    90% { opacity: .4; }
+    to { transform: translateY(-120vh) translateX(80px); opacity: 0; }
+}
+
+.star {
+    position: absolute;
+    color: white;
+    font-size: 11px;
+    pointer-events: none;
+    animation: starFloat 1.2s ease forwards;
+}
+
+@keyframes starFloat {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(-30px) scale(1.5); }
+}
+
+/* ==========================================
+   VISOR MULTIMEDIA (RESPONSIVE)
+   ========================================== */
+.viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(250,247,242,.85);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    transition: .6s;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.viewer-content {
+    width: min(1000px, 90vw);
+    text-align: center;
+    animation: viewerAppear .8s ease;
+}
+
+@keyframes viewerAppear {
+    from { opacity: 0; transform: translateY(40px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.viewer img {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 30px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.08);
+}
+
+.viewer-info {
+    margin-top: 35px;
+}
+
+.viewer-info h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.viewer-info p {
+    max-width: 600px;
+    margin: auto;
+    line-height: 1.8;
+    opacity: .7;
+    font-size: 1rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 3rem;
+    color: var(--text);
+    opacity: .4;
+    transition: .3s;
+}
+
+.close-btn:hover {
+    opacity: 1;
+}
+
+/* ==========================================
    FOOTER
-========================== */
-
-footer{
-
-    position:fixed;
-
-    right:40px;
-
-    bottom:40px;
-
-    z-index:1000;
-
+   ========================================== */
+footer {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    z-index: 1000;
 }
 
-footer a{
-
-    text-decoration:none;
-
-    color:var(--text);
-
-    opacity:.4;
-
-    transition:.4s;
-
-    font-size:.9rem;
-
+footer a {
+    text-decoration: none;
+    color: var(--text);
+    opacity: .4;
+    transition: .4s;
+    font-size: .9rem;
 }
 
-footer a:hover{
-
-    opacity:1;
-
+footer a:hover {
+    opacity: 1;
 }
 
-/* ==========================
-   GALERÍA
-========================== */
-
-.archive{
-
-    position:relative;
-
-    min-height:520vh;
-
-}
-
-/* ==========================
-   OBRAS
-========================== */
-
-.art{
-
-    position:absolute;
-
-    transition:
-    opacity .8s ease;
-
-    transform:
-    translateY(var(--floatY,0px))
-    rotate(var(--rotate,0deg));
-
-}
-
-.art img{
-
-    width:100%;
-
-    display:block;
-
-    object-fit:cover;
-
-    border-radius:28px;
-
-    transition:
-    transform 1s ease,
-    filter 1s ease;
-
-    box-shadow:
-
-    0 30px 60px
-    rgba(0,0,0,.08);
-
-}
-
-.art:hover img{
-
-    transform:scale(1.03);
-
-    filter:brightness(1.04);
-
-}
-
-/* ==========================
-   CURSOR
-========================== */
-.cursor{
-
-    position:fixed;
-
-    left:0;
-    top:0;
-
-    z-index:99999;
-
-    pointer-events:none;
-
-    transform:
-    translate(-50%,-50%);
-
-    font-size:20px;
-
-    color:#d4a5c7;
-
-}
-
-
-.heart{
-
-    position:fixed;
-
-    pointer-events:none;
-
-    z-index:9999;
-
-    color:#d4a5c7;
-
-    font-size:14px;
-
-    transform:
-    translate(-50%,-50%);
-
-    animation:
-    heartFloat 2s ease-out forwards;
-
-}
-
-@keyframes heartFloat{
-
-    0%{
-
-        opacity:.9;
-
-        transform:
-        translate(-50%,-50%)
-        scale(.8);
-
+/* ==========================================
+   MEDIA QUERIES (Ajustes de pantalla móvil)
+   ========================================== */
+@media (max-width: 768px) {
+    .moon-logo {
+        font-size: 3.5rem;
+        top: 20px;
+    }
+    
+    .art {
+        /* Se remueve el ancho estático; ahora el tamaño orgánico 
+           se gestiona con precisión matemática en JS */
+        transition: opacity .5s ease;
+    }
+    
+    .viewer {
+        padding: 20px;
     }
 
-    100%{
-
-        opacity:0;
-
-        transform:
-        translate(-50%,-90px)
-        scale(1.8);
-
+    .viewer img {
+        max-height: 55vh; /* Evita que la imagen pise el texto explicativo en pantallas verticales */
+        border-radius: 20px;
     }
 
-}
-/* ==========================
-   SPARK
-========================== */
-
-.spark{
-
-    position:fixed;
-
-    width:4px;
-
-    height:4px;
-
-    border-radius:50%;
-
-    background:white;
-
-    pointer-events:none;
-
-    animation:sparkFade 1.8s linear forwards;
-
-}
-
-@keyframes sparkFade{
-
-    from{
-
-        opacity:.8;
-
-        transform:scale(1);
-
+    .viewer-info h2 {
+        font-size: 1.8rem;
     }
 
-    to{
-
-        opacity:0;
-
-        transform:scale(5);
-
+    .close-btn {
+        top: 20px;
+        right: 25px;
+        font-size: 2.5rem;
     }
-
-}
-
-/* ==========================
-   BURBUJAS
-========================== */
-
-.bubble{
-
-    position:fixed;
-
-    bottom:-80px;
-
-    border-radius:50%;
-
-    background:
-
-    rgba(255,255,255,.25);
-
-    backdrop-filter:blur(10px);
-
-    border:
-
-    1px solid
-    rgba(255,255,255,.4);
-
-    pointer-events:none;
-
-    animation:floatBubble linear forwards;
-
-}
-
-@keyframes floatBubble{
-
-    from{
-
-        transform:
-        translateY(0)
-        translateX(0);
-
-        opacity:0;
-
+    
+    footer {
+        right: 20px;
+        bottom: 20px;
     }
-
-    10%{
-
-        opacity:.6;
-
-    }
-
-    90%{
-
-        opacity:.4;
-
-    }
-
-    to{
-
-        transform:
-        translateY(-120vh)
-        translateX(80px);
-
-        opacity:0;
-
-    }
-
-}
-
-/* ==========================
-   ESTRELLAS
-========================== */
-
-.star{
-
-    position:absolute;
-
-    color:white;
-
-    font-size:11px;
-
-    pointer-events:none;
-
-    animation:starFloat 1.2s ease forwards;
-
-}
-
-@keyframes starFloat{
-
-    from{
-
-        opacity:1;
-
-        transform:
-        translateY(0)
-        scale(1);
-
-    }
-
-    to{
-
-        opacity:0;
-
-        transform:
-        translateY(-30px)
-        scale(1.5);
-
-    }
-
-}
-
-/* ==========================
-   VISOR
-========================== */
-
-.viewer{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:3000;
-
-    background:
-
-    rgba(250,247,242,.85);
-
-    backdrop-filter:blur(20px);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:40px;
-
-    transition:.6s;
-
-}
-
-.hidden{
-
-    opacity:0;
-
-    pointer-events:none;
-
-}
-
-/* ==========================
-   CONTENIDO VISOR
-========================== */
-
-.viewer-content{
-
-    width:min(1000px,90vw);
-
-    text-align:center;
-
-    animation:viewerAppear .8s ease;
-
-}
-
-@keyframes viewerAppear{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateY(40px)
-        scale(.97);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-        translateY(0)
-        scale(1);
-
-    }
-
-}
-
-.viewer img{
-
-    width:100%;
-
-    max-height:70vh;
-
-    object-fit:contain;
-
-    border-radius:30px;
-
-    box-shadow:
-
-    0 30px 80px
-    rgba(0,0,0,.08);
-
-}
-
-.viewer-info{
-
-    margin-top:35px;
-
-}
-
-.viewer-info h2{
-
-    font-family:'Instrument Serif',serif;
-
-    font-size:2.8rem;
-
-    font-weight:400;
-
-    margin-bottom:10px;
-
-}
-
-.viewer-info p{
-
-    max-width:600px;
-
-    margin:auto;
-
-    line-height:1.8;
-
-    opacity:.7;
-
-    font-size:1rem;
-
-}
-.ascii-bg{
-
-    position:fixed;
-
-    left:-220px;
-
-    top:50%;
-
-    transform:
-        translateY(-50%)
-        scale(.70);
-
-    white-space:pre;
-
-    font-family:monospace;
-
-    font-size:10px;
-
-    line-height:1;
-
-    color:#b6aa9d;
-
-    opacity:.22;
-
-    mix-blend-mode:multiply;
-
-    pointer-events:none;
-
-    user-select:none;
-
-    z-index:0;
-
-}
-
-/* ==========================
-   BOTÓN CERRAR
-========================== */
-
-.close-btn{
-
-    position:absolute;
-
-    top:40px;
-
-    right:50px;
-
-    border:none;
-
-    background:none;
-
-    cursor:pointer;
-
-    font-size:3rem;
-
-    color:var(--text);
-
-    opacity:.4;
-
-    transition:.3s;
-
-}
-
-.close-btn:hover{
-
-    opacity:1;
-
-}
-
-/* ==========================
-   RESPONSIVE
-========================== */
-
-@media(max-width:768px){
-
-    .moon-logo{
-
-        font-size:4rem;
-
-    }
-
-    .art{
-
-        width:220px;
-
-    }
-
-    .viewer-info h2{
-
-        font-size:2rem;
-
-    }
-
 }
