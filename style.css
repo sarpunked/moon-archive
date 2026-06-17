@@ -558,39 +558,37 @@ footer a:hover{
     font-size:1rem;
 
 }
-
-
-
 .ascii-bg{
 
     position:fixed;
 
+    left:-220px;
+
     top:50%;
 
-    left:50%;
-
     transform:
-        translate(-50%,-50%)
-        scale(0.55);
+        translateY(-50%)
+        scale(.70);
 
     white-space:pre;
 
-    font-family:
-        "Courier New",
-        monospace;
+    font-family:monospace;
+
+    font-size:10px;
 
     line-height:1;
 
-    color:rgba(0, 0, 0, 0.05);
+    color:#b6aa9d;
+
+    opacity:.22;
+
+    mix-blend-mode:multiply;
 
     pointer-events:none;
 
     user-select:none;
 
-    z-index:-1;
-
-    filter:
-        blur(0.2px);
+    z-index:0;
 
 }
 
