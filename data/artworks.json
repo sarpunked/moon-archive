@@ -1,0 +1,37 @@
+[
+  {
+    "image":"img/obra1.jpg",
+    "title":"Obra I",
+    "description":"..."
+  },
+  {
+    "image":"img/obra2.jpg",
+    "title":"Obra II",
+    "description":"..."
+  },
+  {
+    "image":"img/obra3.jpg",
+    "title":"Obra III",
+    "description":"..."
+  },
+  {
+    "image":"img/obra4.jpg",
+    "title":"Obra IV",
+    "description":"..."
+  },
+  {
+    "image":"img/obra5.jpg",
+    "title":"Obra V",
+    "description":"..."
+  },
+  {
+    "image":"img/obra6.jpg",
+    "title":"Obra VI",
+    "description":"..."
+  },
+  {
+    "image":"img/obra7.jpg",
+    "title":"Obra VII",
+    "description":"..."
+  }
+]

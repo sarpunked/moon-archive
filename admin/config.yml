@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: sarpunked/moon-archive
+
+media_folder: "img"
+public_folder: "/img"
+
+collections:
+  - name: "artworks"
+    label: "Obras"
+
+    files:
+      - label: "Galería"
+        name: "gallery"
+        file: "data/artworks.json"
+
+        fields:
+          - label: "Obras"
+            name: "items"
+            widget: "list"
+
+            fields:
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Descripción", name: "description", widget: "text" }
+              - { label: "Imagen", name: "image", widget: "image" }

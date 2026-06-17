@@ -1,0 +1,577 @@
+/* ==========================
+   VARIABLES
+========================== */
+
+:root{
+
+    --bg:#faf7f2;
+
+    --text:#2f2f2f;
+
+    --soft:#d7cfc4;
+
+    --white:#ffffff;
+
+}
+
+/* ==========================
+   RESET
+========================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+    min-height:100vh;
+
+    font-family:'Inter',sans-serif;
+
+    cursor:none;
+
+    position:relative;
+
+}
+
+/* ==========================
+   FONDO
+========================== */
+
+.background-glow{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+    background:
+
+    radial-gradient(
+        circle at 20% 20%,
+        rgba(255,255,255,.9),
+        transparent 35%
+    ),
+
+    radial-gradient(
+        circle at 80% 60%,
+        rgba(255,255,255,.4),
+        transparent 40%
+    ),
+
+    radial-gradient(
+        circle at 50% 100%,
+        rgba(255,255,255,.3),
+        transparent 50%
+    );
+
+    filter:blur(60px);
+
+}
+
+/* ==========================
+   LOGO
+========================== */
+
+.moon-logo{
+
+    position:fixed;
+
+    top:40px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:1000;
+
+    font-family:'Instrument Serif',serif;
+
+    font-size:clamp(3rem,7vw,7rem);
+
+    font-weight:400;
+
+    letter-spacing:1px;
+
+    opacity:.8;
+
+    transition:1s;
+
+}
+
+.moon-logo:hover{
+
+    letter-spacing:8px;
+
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+
+    position:fixed;
+
+    right:40px;
+
+    bottom:40px;
+
+    z-index:1000;
+
+}
+
+footer a{
+
+    text-decoration:none;
+
+    color:var(--text);
+
+    opacity:.4;
+
+    transition:.4s;
+
+    font-size:.9rem;
+
+}
+
+footer a:hover{
+
+    opacity:1;
+
+}
+
+/* ==========================
+   GALERÍA
+========================== */
+
+.archive{
+
+    position:relative;
+
+    min-height:520vh;
+
+}
+
+/* ==========================
+   OBRAS
+========================== */
+
+.art{
+
+    position:absolute;
+
+    transition:
+    opacity .8s ease;
+
+    transform:
+    translateY(var(--floatY,0px))
+    rotate(var(--rotate,0deg));
+
+}
+
+.art img{
+
+    width:100%;
+
+    display:block;
+
+    object-fit:cover;
+
+    border-radius:28px;
+
+    transition:
+    transform 1s ease,
+    filter 1s ease;
+
+    box-shadow:
+
+    0 30px 60px
+    rgba(0,0,0,.08);
+
+}
+
+.art:hover img{
+
+    transform:scale(1.03);
+
+    filter:brightness(1.04);
+
+}
+
+/* ==========================
+   CURSOR
+========================== */
+
+.cursor{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    z-index:99999;
+
+    pointer-events:none;
+
+    transform:translate(-50%,-50%);
+
+    font-size:12px;
+
+    color:#b6aa9d;
+
+}
+
+/* ==========================
+   SPARK
+========================== */
+
+.spark{
+
+    position:fixed;
+
+    width:4px;
+
+    height:4px;
+
+    border-radius:50%;
+
+    background:white;
+
+    pointer-events:none;
+
+    animation:sparkFade 1.8s linear forwards;
+
+}
+
+@keyframes sparkFade{
+
+    from{
+
+        opacity:.8;
+
+        transform:scale(1);
+
+    }
+
+    to{
+
+        opacity:0;
+
+        transform:scale(5);
+
+    }
+
+}
+
+/* ==========================
+   BURBUJAS
+========================== */
+
+.bubble{
+
+    position:fixed;
+
+    bottom:-80px;
+
+    border-radius:50%;
+
+    background:
+
+    rgba(255,255,255,.25);
+
+    backdrop-filter:blur(10px);
+
+    border:
+
+    1px solid
+    rgba(255,255,255,.4);
+
+    pointer-events:none;
+
+    animation:floatBubble linear forwards;
+
+}
+
+@keyframes floatBubble{
+
+    from{
+
+        transform:
+        translateY(0)
+        translateX(0);
+
+        opacity:0;
+
+    }
+
+    10%{
+
+        opacity:.6;
+
+    }
+
+    90%{
+
+        opacity:.4;
+
+    }
+
+    to{
+
+        transform:
+        translateY(-120vh)
+        translateX(80px);
+
+        opacity:0;
+
+    }
+
+}
+
+/* ==========================
+   ESTRELLAS
+========================== */
+
+.star{
+
+    position:absolute;
+
+    color:white;
+
+    font-size:11px;
+
+    pointer-events:none;
+
+    animation:starFloat 1.2s ease forwards;
+
+}
+
+@keyframes starFloat{
+
+    from{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+    to{
+
+        opacity:0;
+
+        transform:
+        translateY(-30px)
+        scale(1.5);
+
+    }
+
+}
+
+/* ==========================
+   VISOR
+========================== */
+
+.viewer{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:3000;
+
+    background:
+
+    rgba(250,247,242,.85);
+
+    backdrop-filter:blur(20px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+    transition:.6s;
+
+}
+
+.hidden{
+
+    opacity:0;
+
+    pointer-events:none;
+
+}
+
+/* ==========================
+   CONTENIDO VISOR
+========================== */
+
+.viewer-content{
+
+    width:min(1000px,90vw);
+
+    text-align:center;
+
+    animation:viewerAppear .8s ease;
+
+}
+
+@keyframes viewerAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(40px)
+        scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+.viewer img{
+
+    width:100%;
+
+    max-height:70vh;
+
+    object-fit:contain;
+
+    border-radius:30px;
+
+    box-shadow:
+
+    0 30px 80px
+    rgba(0,0,0,.08);
+
+}
+
+.viewer-info{
+
+    margin-top:35px;
+
+}
+
+.viewer-info h2{
+
+    font-family:'Instrument Serif',serif;
+
+    font-size:2.8rem;
+
+    font-weight:400;
+
+    margin-bottom:10px;
+
+}
+
+.viewer-info p{
+
+    max-width:600px;
+
+    margin:auto;
+
+    line-height:1.8;
+
+    opacity:.7;
+
+    font-size:1rem;
+
+}
+
+/* ==========================
+   BOTÓN CERRAR
+========================== */
+
+.close-btn{
+
+    position:absolute;
+
+    top:40px;
+
+    right:50px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-size:3rem;
+
+    color:var(--text);
+
+    opacity:.4;
+
+    transition:.3s;
+
+}
+
+.close-btn:hover{
+
+    opacity:1;
+
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+    .moon-logo{
+
+        font-size:4rem;
+
+    }
+
+    .art{
+
+        width:220px;
+
+    }
+
+    .viewer-info h2{
+
+        font-size:2rem;
+
+    }
+
+}
