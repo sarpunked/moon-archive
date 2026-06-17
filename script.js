@@ -201,89 +201,66 @@ viewer.addEventListener(
 
     }
 );
-
 // ==========================================
 // CURSOR
 // ==========================================
-
-let mouseX = 0;
-let mouseY = 0;
-
-let currentX = 0;
-let currentY = 0;
 
 document.addEventListener(
     "mousemove",
     e=>{
 
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        cursor.style.left =
+        e.clientX + "px";
 
-        createSpark(
+        cursor.style.top =
+        e.clientY + "px";
+
+        createHeart(
             e.clientX,
             e.clientY
         );
 
     }
 );
-
-function animateCursor(){
-
-    currentX +=
-    (mouseX-currentX)*0.08;
-
-    currentY +=
-    (mouseY-currentY)*0.08;
-
-    cursor.style.left =
-    currentX + "px";
-
-    cursor.style.top =
-    currentY + "px";
-
-    requestAnimationFrame(
-        animateCursor
-    );
-
-}
-
-animateCursor();
-
 // ==========================================
 // POLVO DE HADAS
 // ==========================================
+// ==========================================
+// CORAZONES
+// ==========================================
 
-function createSpark(x,y){
+function createHeart(x,y){
 
-    if(Math.random() > 0.90){
+    if(Math.random() > 0.75){
 
-        const spark =
+        const heart =
         document.createElement("div");
 
-        spark.classList.add(
-            "spark"
+        heart.classList.add(
+            "heart"
         );
 
-        spark.style.left =
+        heart.innerHTML = "♡";
+
+        heart.style.left =
         x + "px";
 
-        spark.style.top =
+        heart.style.top =
         y + "px";
 
         document.body.appendChild(
-            spark
+            heart
         );
 
         setTimeout(()=>{
 
-            spark.remove();
+            heart.remove();
 
-        },1800);
+        },2000);
 
     }
 
 }
-
 // ==========================================
 // BURBUJITAS
 // ==========================================

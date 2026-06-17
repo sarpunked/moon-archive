@@ -221,27 +221,70 @@ footer a:hover{
 /* ==========================
    CURSOR
 ========================== */
-
 .cursor{
 
     position:fixed;
 
     left:0;
-
     top:0;
 
     z-index:99999;
 
     pointer-events:none;
 
-    transform:translate(-50%,-50%);
+    transform:
+    translate(-50%,-50%);
 
-    font-size:12px;
+    font-size:20px;
 
-    color:#b6aa9d;
+    color:#d4a5c7;
 
 }
 
+
+.heart{
+
+    position:fixed;
+
+    pointer-events:none;
+
+    z-index:9999;
+
+    color:#d4a5c7;
+
+    font-size:14px;
+
+    transform:
+    translate(-50%,-50%);
+
+    animation:
+    heartFloat 2s ease-out forwards;
+
+}
+
+@keyframes heartFloat{
+
+    0%{
+
+        opacity:.9;
+
+        transform:
+        translate(-50%,-50%)
+        scale(.8);
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+        translate(-50%,-90px)
+        scale(1.8);
+
+    }
+
+}
 /* ==========================
    SPARK
 ========================== */
@@ -513,6 +556,41 @@ footer a:hover{
     opacity:.7;
 
     font-size:1rem;
+
+}
+
+
+
+.ascii-bg{
+
+    position:fixed;
+
+    top:50%;
+
+    left:50%;
+
+    transform:
+        translate(-50%,-50%)
+        scale(0.55);
+
+    white-space:pre;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    line-height:1;
+
+    color:rgba(0,0,0,.05);
+
+    pointer-events:none;
+
+    user-select:none;
+
+    z-index:-2;
+
+    filter:
+        blur(1px);
 
 }
 
