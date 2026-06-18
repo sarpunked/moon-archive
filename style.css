@@ -275,28 +275,6 @@ img {
     opacity: 1;
 }
 
-/* ==========================
-   FOOTER
-========================== */
-footer {
-    position: fixed;
-    right: 40px;
-    bottom: 40px;
-    z-index: 1000;
-}
-
-footer a {
-    text-decoration: none;
-    color: var(--text);
-    opacity: .4;
-    transition: .4s;
-    font-size: .9rem;
-}
-
-footer a:hover {
-    opacity: 1;
-}
-
 /* ==========================================
    MEDIA QUERIES (Ajustes de pantalla móvil)
    ========================================== */
@@ -347,20 +325,13 @@ footer a:hover {
         font-size: 2.5rem;
     }
 
-    footer {
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-        right: auto;
-        bottom: 24px;
+  .contact-links {
+    left: -95px;
 
-        display: flex;
-        gap: 18px;
-    }
+    font-size: 0.8rem;
 
-    footer a {
-        font-size: .9rem;
-    }
+    letter-spacing: 0.08em;
+}
 
     .cursor {
         display: none;
@@ -370,29 +341,41 @@ footer a:hover {
         display: none;
     }
 }
+/* ==========================================
+   CONTACTO LATERAL EDITORIAL
+   ========================================== */
 
-.contact-links{
+.contact-links {
     position: fixed;
-    right: 50px;
-    bottom: 40px;
+
+    left: -100px;
+    top: 50%;
+
+    transform:
+        translateY(-50%)
+        rotate(-90deg);
+
     z-index: 1000;
 
     display: flex;
-    gap: 12px;
     align-items: center;
+    gap: 14px;
 
-    font-size: 1rem;
-    letter-spacing: .08em;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
 }
 
 .contact-links a,
-.contact-links span{
+.contact-links span {
     color: var(--text);
-    opacity: .55;
+
     text-decoration: none;
-    transition: .3s;
+
+    opacity: .45;
+
+    transition: opacity .3s ease;
 }
 
-.contact-links a:hover{
+.contact-links a:hover {
     opacity: 1;
 }

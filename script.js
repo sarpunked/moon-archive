@@ -1,298 +1,687 @@
-// ==========================================
-// MOON ARCHIVE V3 - Fairy Dreamy Edition (Optimized & Clean Scroll)
-// ==========================================
+// ==========================================================
+// MOON ARCHIVE V3 - Fairy Dreamy Edition
+// Versión optimizada y comentada
+// ==========================================================
+
+
+
+// ==========================================================
+// REFERENCIAS A ELEMENTOS DEL DOM
+// ==========================================================
+// Guardamos en constantes los elementos HTML que vamos a usar
+// frecuentemente para evitar buscarlos varias veces.
 
 const archive = document.getElementById("archive");
+
 const viewer = document.getElementById("viewer");
 const viewerImage = document.getElementById("viewerImage");
 const viewerTitle = document.getElementById("viewerTitle");
 const viewerDescription = document.getElementById("viewerDescription");
 const closeViewer = document.getElementById("closeViewer");
+
 const cursor = document.querySelector(".cursor");
 const moonLogo = document.querySelector(".moon-logo");
 
-let artworksData = []; 
 
-// ==========================================
-// EFECTO: DESINTEGRACIÓN DE TÍTULO POR SCROLL
-// ==========================================
+// Almacenará las obras obtenidas desde artworks.json
+let artworksData = [];
+
+
+
+/* ==========================================================
+   EFECTO DEL LOGO "MOON"
+   Desintegración progresiva al hacer scroll
+========================================================== */
+
+/**
+ * Divide cada letra del logo en un <span>
+ * para poder animarlas individualmente.
+ */
 function initLogoSplitting() {
-    // Dividir el texto del logo en letras envueltas en spans
+
     const text = moonLogo.textContent.trim();
+
     moonLogo.innerHTML = "";
-    
-    [...text].forEach((char, index) => {
+
+    [...text].forEach(char => {
+
         const span = document.createElement("span");
+
         span.textContent = char;
+
         span.style.display = "inline-block";
-        span.style.transition = "transform 0.1s linear, opacity 0.1s linear";
+
+        span.style.transition =
+            "transform 0.1s linear, opacity 0.1s linear";
+
         moonLogo.appendChild(span);
     });
 }
 
+
+/**
+ * A medida que el usuario hace scroll,
+ * las letras del logo se separan y desaparecen.
+ */
 window.addEventListener("scroll", () => {
+
     const scrollTop = window.scrollY;
-    const maxScroll = 400; // Distancia de scroll donde se desintegra por completo
+
+    // Distancia necesaria para completar el efecto
+    const maxScroll = 400;
+
     const progress = Math.min(scrollTop / maxScroll, 1);
-    
+
     const letters = moonLogo.querySelectorAll("span");
-    
-    // Si ya bajó lo suficiente, ocultamos por completo el contenedor para evitar clics fantasma
+
+
+    // Cuando desaparece completamente,
+    // se deshabilitan los clics sobre el logo.
     if (progress >= 1) {
+
         moonLogo.style.opacity = "0";
         moonLogo.style.pointerEvents = "none";
+
     } else {
+
         moonLogo.style.opacity = "1";
         moonLogo.style.pointerEvents = "auto";
     }
 
+
     letters.forEach((letter, index) => {
-        // Direcciones aleatorias controladas para cada letra de "m-o-o-n"
+
+        /*
+         * Dirección específica para cada letra.
+         * Pensado originalmente para "m-o-o-n".
+         */
         const directions = [
-            { x: -80, y: -40, rotate: -35 }, // m
-            { x: -30, y: -70, rotate: 20 },  // o
-            { x: 30, y: -70, rotate: -20 },  // o
-            { x: 80, y: -40, rotate: 35 }    // n
+            { x: -80, y: -40, rotate: -35 },
+            { x: -30, y: -70, rotate: 20 },
+            { x: 30,  y: -70, rotate: -20 },
+            { x: 80,  y: -40, rotate: 35 }
         ];
-        
-        const dir = directions[index] || { x: 0, y: -50, rotate: 0 };
-        
-        // Multiplicamos el destino por el progreso del scroll actual
+
+        const dir = directions[index] || {
+            x: 0,
+            y: -50,
+            rotate: 0
+        };
+
         const moveX = dir.x * progress;
         const moveY = dir.y * progress;
         const rotate = dir.rotate * progress;
-        const opacity = 1 - progress; // Se desvanece a medida que baja
 
-        letter.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotate(${rotate}deg)`;
+        // Se desvanece gradualmente
+        const opacity = 1 - progress;
+
+        letter.style.transform =
+            `translate3d(${moveX}px, ${moveY}px, 0)
+             rotate(${rotate}deg)`;
+
         letter.style.opacity = opacity;
     });
 });
 
-// ==========================================
-// CONSTELACIÓN GUIADA (Adaptativa)
-// ==========================================
+
+/**
+ * Genera las posiciones de cada obra dentro del archivo.
+ *
+ * - En móvil: alterna izquierda/derecha para mantener
+ *   la composición vertical original.
+ *
+ * - En desktop: organiza las obras en varias columnas,
+ *   agregando pequeñas variaciones para conservar el
+ *   efecto de "constelación" y evitar una grilla rígida.
+ */
 function generateConstellation(count) {
+
     const positions = [];
+
     const center = window.innerWidth / 2;
     const isMobile = window.innerWidth < 768;
 
     for (let i = 0; i < count; i++) {
 
+        // ==========================
+        // DISTRIBUCIÓN MOBILE
+        // ==========================
         if (isMobile) {
 
             const widths = [78, 62, 72];
+
             const widthVW = widths[i % widths.length];
 
-            const size = window.innerWidth * (widthVW / 100);
+            const size =
+                window.innerWidth * (widthVW / 100);
 
-            const x = i % 2 === 0
-                ? 20
-                : window.innerWidth - size - 20;
+            const x =
+                i % 2 === 0
+                    ? 20
+                    : window.innerWidth - size - 20;
 
             positions.push({
                 x,
                 y: 240 + i * 430
             });
 
-        } else {
+        }
 
-            const desktopOffsets = [-250, 150, -180, 220];
+        // ==========================
+        // DISTRIBUCIÓN DESKTOP
+        // ==========================
+        else {
 
-positions.push({
-    x: center + desktopOffsets[i % desktopOffsets.length],
-    y: 350 + i * 650
-});
+            // Cantidad de obras por fila
+            const columns = 3;
 
+            // Separación horizontal entre columnas
+            const horizontalSpacing = 420;
+
+            // Separación vertical entre filas
+            const verticalSpacing = 500;
+
+            // Columna actual (0, 1, 2...)
+            const col = i % columns;
+
+            // Fila actual (0, 1, 2...)
+            const row = Math.floor(i / columns);
+
+            /*
+             * Calcula el punto inicial para que
+             * las columnas queden centradas.
+             */
+            const startX =
+                center -
+                ((columns - 1) * horizontalSpacing) / 2;
+
+            /*
+             * Pequeñas variaciones aleatorias
+             * para mantener el aspecto de
+             * constelación y evitar una grilla perfecta.
+             */
+            const randomX = Math.random() * 80 - 40;
+            const randomY = Math.random() * 60 - 30;
+
+            positions.push({
+                x:
+                    startX +
+                    col * horizontalSpacing +
+                    randomX,
+
+                y:
+                    350 +
+                    row * verticalSpacing +
+                    randomY
+            });
         }
     }
 
     return positions;
 }
-// ==========================================
-// RENDERIZAR OBRAS (Con soporte Responsive real)
-// ==========================================
+
+
+/* ==========================================================
+   RENDERIZADO DE LAS OBRAS
+========================================================== */
+
+/**
+ * Crea todas las tarjetas de obras
+ * utilizando la información del JSON.
+ */
 function renderArtworks(artworks) {
-    archive.innerHTML = ""; 
-    const constellation = generateConstellation(artworks.length);
-    
-const spacing = window.innerWidth < 768 ? 430 : 650;
+
+    archive.innerHTML = "";
+
+    const constellation =
+        generateConstellation(artworks.length);
+
+
+    const spacing =
+        window.innerWidth < 768
+            ? 430
+            : 650;
+
+
+    /*
+     * Aumenta la altura mínima del contenedor
+     * para que haya espacio suficiente para hacer scroll.
+     */
     archive.style.minHeight =
-    `${artworks.length * spacing + 400}px`;
+        `${artworks.length * spacing + 400}px`;
+
+
     artworks.forEach((art, index) => {
+
         const card = document.createElement("div");
+
         card.classList.add("art");
+
 
         let size;
 
-if (window.innerWidth < 768) {
 
-    const mobileSizes = [78, 62, 72];
+        // Tamaños responsivos
+        if (window.innerWidth < 768) {
 
-    size = window.innerWidth * (mobileSizes[index % mobileSizes.length] / 100);
+            const mobileSizes = [78, 62, 72];
 
-} else {
+            size =
+                window.innerWidth *
+                (mobileSizes[index % mobileSizes.length] / 100);
 
-    const desktopSizes = [320, 420, 360, 390];
+        } else {
 
-size = desktopSizes[index % desktopSizes.length];
+            const desktopSizes = [
+                320,
+                420,
+                360,
+                390
+            ];
 
-}
-        
+            size =
+                desktopSizes[index % desktopSizes.length];
+        }
+
+
         card.style.width = `${size}px`;
-        card.style.left = `${constellation[index].x}px`;
-        card.style.top = `${constellation[index].y}px`;
+
+        card.style.left =
+            `${constellation[index].x}px`;
+
+        card.style.top =
+            `${constellation[index].y}px`;
+
         card.dataset.index = index;
 
-        const imgSmall = art.image_small || art.image;
-        const imgMedium = art.image_medium || art.image;
-        const imgLarge = art.image || art.image;
+
+        /*
+         * Versiones de imagen para responsive.
+         */
+        const imgSmall =
+            art.image_small || art.image;
+
+        const imgMedium =
+            art.image_medium || art.image;
+
+        const imgLarge =
+            art.image;
+
 
         card.innerHTML = `
             <img
-                src="${imgMedium}" 
-                srcset="${imgSmall} 400w, ${imgMedium} 800w, ${imgLarge} 1200w"
-                sizes="(max-width: 768px) 220px, 320px"
+                src="${imgMedium}"
+
+                srcset="
+                    ${imgSmall} 400w,
+                    ${imgMedium} 800w,
+                    ${imgLarge} 1200w
+                "
+
+                sizes="
+                    (max-width: 768px) 220px,
+                    320px
+                "
+
                 alt="${art.title}"
+
                 loading="lazy"
             >
         `;
 
-        card.addEventListener("mouseenter", () => createStars(card));
-        card.addEventListener("click", () => openArtwork(art));
+
+        // Estrellas al pasar el mouse
+        card.addEventListener(
+            "mouseenter",
+            () => createStars(card)
+        );
+
+        // Abrir visor
+        card.addEventListener(
+            "click",
+            () => openArtwork(art)
+        );
+
+
         archive.appendChild(card);
     });
 }
 
-// Inicialización de Carga
-fetch("data/artworks.json")
-    .then(res => res.json())
-    .then(data => {
-    artworksData = data.items; 
-    initLogoSplitting();
-    renderArtworks(artworksData);
-    animateArtworks();
-})
-    .catch(err => console.error("Error cargando obras:", err));
 
-// Evento Resize Inteligente
+
+/* ==========================================================
+   CARGA INICIAL DEL JSON
+========================================================== */
+
+fetch("data/artworks.json")
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        artworksData = data.items;
+
+        initLogoSplitting();
+
+        renderArtworks(artworksData);
+
+        animateArtworks();
+    })
+
+    .catch(err => {
+
+        console.error(
+            "Error cargando obras:",
+            err
+        );
+    });
+
+
+
+/* ==========================================================
+   RESIZE INTELIGENTE
+========================================================== */
+
+/*
+ * Evita rerenderizar constantemente
+ * mientras el usuario redimensiona.
+ */
 let resizeTimeout;
+
 let lastWidth = window.innerWidth;
+
 
 window.addEventListener("resize", () => {
 
-    // En móviles ignoramos cambios de altura
-    if (window.innerWidth === lastWidth) return;
+    /*
+     * En móviles ignoramos cambios de altura,
+     * ya que suelen deberse a la aparición
+     * del teclado o barra del navegador.
+     */
+    if (window.innerWidth === lastWidth) {
+        return;
+    }
 
     lastWidth = window.innerWidth;
 
     clearTimeout(resizeTimeout);
 
     resizeTimeout = setTimeout(() => {
+
         if (artworksData.length > 0) {
+
             renderArtworks(artworksData);
         }
-    }, 300);
 
+    }, 300);
 });
-// ==========================================
-// VISOR MULTIMEDIA
-// ==========================================
+
+
+
+/* ==========================================================
+   VISOR MULTIMEDIA
+========================================================== */
+
+/**
+ * Abre el modal con la información de la obra.
+ */
 function openArtwork(art) {
-    viewerImage.src = art.image; 
-    if(art.image_medium) {
-        viewerImage.srcset = `${art.image_small} 400w, ${art.image_medium} 800w, ${art.image} 1200w`;
+
+    viewerImage.src = art.image;
+
+
+    if (art.image_medium) {
+
+        viewerImage.srcset = `
+            ${art.image_small} 400w,
+            ${art.image_medium} 800w,
+            ${art.image} 1200w
+        `;
     }
-    
-    viewerTitle.textContent = art.title;
-    viewerDescription.textContent = art.description;
+
+
+    viewerTitle.textContent =
+        art.title;
+
+    viewerDescription.textContent =
+        art.description;
+
+
     viewer.classList.remove("hidden");
+
+
+    // Bloquea el scroll del fondo
     document.body.style.overflow = "hidden";
 }
 
-// Cerrar visor
+
+/**
+ * Cierra el visor.
+ */
 function closeArtwork() {
+
     viewer.classList.add("hidden");
+
     document.body.style.overflow = "auto";
-    viewerImage.srcset = ""; 
+
+    viewerImage.srcset = "";
 }
 
-closeViewer.addEventListener("click", closeArtwork);
+
+// Botón cerrar
+closeViewer.addEventListener(
+    "click",
+    closeArtwork
+);
+
+
+// Clic fuera del contenido
 viewer.addEventListener("click", e => {
-    if (e.target === viewer) closeArtwork();
+
+    if (e.target === viewer) {
+
+        closeArtwork();
+    }
 });
 
-// ==========================================
-// CURSOR Y POLVO DE HADAS
-// ==========================================
+
+// Tecla Escape
+document.addEventListener("keydown", e => {
+
+    if (e.key === "Escape") {
+
+        closeArtwork();
+    }
+});
+
+
+
+/* ==========================================================
+   CURSOR PERSONALIZADO Y POLVO DE HADAS
+========================================================== */
+
 document.addEventListener("mousemove", e => {
+
     cursor.style.left = `${e.clientX}px`;
+
     cursor.style.top = `${e.clientY}px`;
-    createHeart(e.clientX, e.clientY);
+
+
+    createHeart(
+        e.clientX,
+        e.clientY
+    );
 });
 
+
+/**
+ * Genera corazones aleatorios
+ * siguiendo el cursor.
+ */
 function createHeart(x, y) {
-    if (Math.random() > 0.85) { 
-        const heart = document.createElement("div");
+
+    if (Math.random() > 0.85) {
+
+        const heart =
+            document.createElement("div");
+
         heart.classList.add("heart");
+
         heart.innerHTML = "♡";
+
         heart.style.left = `${x}px`;
+
         heart.style.top = `${y}px`;
+
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 2000);
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 2000);
     }
 }
 
+
+
+/* ==========================================================
+   BURBUJAS DECORATIVAS
+========================================================== */
+
+/**
+ * Crea burbujas flotantes
+ * en posiciones aleatorias.
+ */
 function createBubble() {
-    const bubble = document.createElement("div");
+
+    const bubble =
+        document.createElement("div");
+
     bubble.classList.add("bubble");
-    const size = 10 + Math.random() * 25;
-    
-    bubble.style.width = `${size}px`;
-    bubble.style.height = `${size}px`;
-    bubble.style.left = `${Math.random() * 100}vw`;
-    bubble.style.animationDuration = `${15 + Math.random() * 10}s`;
-    
+
+
+    const size =
+        10 + Math.random() * 25;
+
+
+    bubble.style.width =
+        `${size}px`;
+
+    bubble.style.height =
+        `${size}px`;
+
+    bubble.style.left =
+        `${Math.random() * 100}vw`;
+
+    bubble.style.animationDuration =
+        `${15 + Math.random() * 10}s`;
+
+
     document.body.appendChild(bubble);
-    setTimeout(() => bubble.remove(), 25000);
+
+
+    setTimeout(() => {
+
+        bubble.remove();
+
+    }, 25000);
 }
+
+
+// Genera una nueva burbuja cada cierto tiempo
 setInterval(createBubble, 2200);
 
+
+
+/* ==========================================================
+   ESTRELLAS AL PASAR EL MOUSE SOBRE UNA OBRA
+========================================================== */
+
+/**
+ * Crea pequeñas estrellas temporales
+ * alrededor de una tarjeta.
+ */
 function createStars(card) {
+
     for (let i = 0; i < 6; i++) {
-        const star = document.createElement("div");
+
+        const star =
+            document.createElement("div");
+
         star.classList.add("star");
+
         star.innerHTML = "✦";
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
+
+        star.style.left =
+            `${Math.random() * 100}%`;
+
+        star.style.top =
+            `${Math.random() * 100}%`;
+
         card.appendChild(star);
-        setTimeout(() => star.remove(), 1200);
+
+
+        setTimeout(() => {
+
+            star.remove();
+
+        }, 1200);
     }
 }
 
-// Movimiento Orgánico Constante
+
+
+/* ==========================================================
+   MOVIMIENTO ORGÁNICO DE LAS OBRAS
+========================================================== */
+
+/**
+ * Hace que las imágenes floten suavemente.
+ * Utiliza requestAnimationFrame para una
+ * animación eficiente.
+ */
 function animateArtworks() {
-    const arts = document.querySelectorAll(".art");
+
+    const arts =
+        document.querySelectorAll(".art");
+
     const time = Date.now();
 
+
     arts.forEach((art, index) => {
-        const speed = 0.0004 + index * 0.00005;
-        const isMobile = window.innerWidth < 768;
 
-const y = isMobile
-    ? Math.sin(time * speed) * 2
-    : Math.sin(time * speed) * 6;
+        const speed =
+            0.0004 + index * 0.00005;
 
-const rotate = isMobile
-    ? 0
-    : Math.sin(time * speed) * 0.5;
 
-        art.style.setProperty("--floatY", `${y}px`);
-        art.style.setProperty("--rotate", `${rotate}deg`);
+        const isMobile =
+            window.innerWidth < 768;
+
+
+        const y = isMobile
+            ? Math.sin(time * speed) * 2
+            : Math.sin(time * speed) * 6;
+
+
+        const rotate = isMobile
+            ? 0
+            : Math.sin(time * speed) * 0.5;
+
+
+        art.style.setProperty(
+            "--floatY",
+            `${y}px`
+        );
+
+        art.style.setProperty(
+            "--rotate",
+            `${rotate}deg`
+        );
     });
 
-    requestAnimationFrame(animateArtworks);
-}
 
-document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeArtwork();
-});
+    requestAnimationFrame(
+        animateArtworks
+    );
+}
