@@ -3,7 +3,7 @@
     {
       "image": "/img/obra1.jpg",
       "title": "Obra I",
-      "description": "..."
+      "description": "boca vomita organica"
     },
     {
       "image": "/img/obra2.jpg",
@@ -34,6 +34,11 @@
       "image": "/img/obra7.jpg",
       "title": "Obra VII",
       "description": "..."
+    },
+    {
+      "title": "Obra VIIII",
+      "description": "aguante luci",
+      "image": "/img/681490304_18031742759800893_6641243509152623734_n.jpg"
     }
   ]
 }
