@@ -333,7 +333,7 @@ img {
         bottom: 0;
         top: auto;
 
-        /* IMPORTANTE */
+
         transform: none;
 
         display: flex;
@@ -382,7 +382,7 @@ img {
 .contact-links {
     position: fixed;
 
-    left: -200px;
+    left: -210px;
     top: 50%;
 
     transform:
