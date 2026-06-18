@@ -62,13 +62,12 @@ body {
 
 .moon-logo {
     position: fixed;
-    top: 40px;
+    top: 70px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10; /* Z-index bajo el visor pero visible arriba de la galería base */
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(3.5rem, 8vw, 7rem);
-    font-weight: 400;
+font-size: clamp(4rem,7vw,7rem);    font-weight: 400;
     letter-spacing: 2px;
     will-change: transform, opacity; /* Forzar renderizado por GPU */
     user-select: none;
@@ -355,4 +354,30 @@ footer a:hover {
     .bubble:nth-child(n+3) {
         display: none;
     }
+}
+
+.contact-links{
+    position: fixed;
+    right: 50px;
+    bottom: 40px;
+    z-index: 1000;
+
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    font-size: 1rem;
+    letter-spacing: .08em;
+}
+
+.contact-links a,
+.contact-links span{
+    color: var(--text);
+    opacity: .55;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.contact-links a:hover{
+    opacity: 1;
 }

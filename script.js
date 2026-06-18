@@ -96,12 +96,12 @@ function generateConstellation(count) {
 
         } else {
 
-            const wave = Math.sin(i * 1.15) * 220;
+            const desktopOffsets = [-250, 150, -180, 220];
 
-            positions.push({
-                x: center + wave - 160,
-                y: 300 + i * 450
-            });
+positions.push({
+    x: center + desktopOffsets[i % desktopOffsets.length],
+    y: 350 + i * 650
+});
 
         }
     }
@@ -115,8 +115,7 @@ function renderArtworks(artworks) {
     archive.innerHTML = ""; 
     const constellation = generateConstellation(artworks.length);
     
-const spacing = window.innerWidth < 768 ? 430 : 500;    archive.style.minHeight = `${artworks.length * spacing}px`;
-
+const spacing = window.innerWidth < 768 ? 430 : 650;
     artworks.forEach((art, index) => {
         const card = document.createElement("div");
         card.classList.add("art");
@@ -131,8 +130,9 @@ if (window.innerWidth < 768) {
 
 } else {
 
-    const baseSize = 280;
-    size = baseSize + Math.sin(index) * 30 + Math.random() * 20;
+    const desktopSizes = [320, 420, 360, 390];
+
+size = desktopSizes[index % desktopSizes.length];
 
 }
         
