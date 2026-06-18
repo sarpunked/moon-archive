@@ -116,6 +116,8 @@ function renderArtworks(artworks) {
     const constellation = generateConstellation(artworks.length);
     
 const spacing = window.innerWidth < 768 ? 430 : 650;
+    archive.style.minHeight =
+    `${artworks.length * spacing + 400}px`;
     artworks.forEach((art, index) => {
         const card = document.createElement("div");
         card.classList.add("art");
@@ -172,17 +174,26 @@ fetch("data/artworks.json")
 })
     .catch(err => console.error("Error cargando obras:", err));
 
-// Evento Resize Controlado (Debounce)
+// Evento Resize Inteligente
 let resizeTimeout;
+let lastWidth = window.innerWidth;
+
 window.addEventListener("resize", () => {
+
+    // En móviles ignoramos cambios de altura
+    if (window.innerWidth === lastWidth) return;
+
+    lastWidth = window.innerWidth;
+
     clearTimeout(resizeTimeout);
+
     resizeTimeout = setTimeout(() => {
         if (artworksData.length > 0) {
             renderArtworks(artworksData);
         }
-    }, 250); 
-});
+    }, 300);
 
+});
 // ==========================================
 // VISOR MULTIMEDIA
 // ==========================================
@@ -265,8 +276,15 @@ function animateArtworks() {
 
     arts.forEach((art, index) => {
         const speed = 0.0004 + index * 0.00005;
-        const y = Math.sin(time * speed) * 6;
-        const rotate = Math.sin(time * speed) * 0.5;
+        const isMobile = window.innerWidth < 768;
+
+const y = isMobile
+    ? Math.sin(time * speed) * 2
+    : Math.sin(time * speed) * 6;
+
+const rotate = isMobile
+    ? 0
+    : Math.sin(time * speed) * 0.5;
 
         art.style.setProperty("--floatY", `${y}px`);
         art.style.setProperty("--rotate", `${rotate}deg`);

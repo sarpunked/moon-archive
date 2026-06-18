@@ -67,7 +67,8 @@ body {
     transform: translateX(-50%);
     z-index: 10; /* Z-index bajo el visor pero visible arriba de la galería base */
     font-family: 'Instrument Serif', serif;
-font-size: clamp(4rem,7vw,7rem);    font-weight: 400;
+font-size: clamp(4rem,7vw,7rem);
+    font-weight: 400;
     letter-spacing: 2px;
     will-change: transform, opacity; /* Forzar renderizado por GPU */
     user-select: none;
@@ -81,6 +82,20 @@ font-size: clamp(4rem,7vw,7rem);    font-weight: 400;
     min-height: 520vh;
 }
 
+
+
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button,
+.art,
+img {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
 .art {
     position: absolute;
     transition: opacity .8s ease;
