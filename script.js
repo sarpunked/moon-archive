@@ -77,22 +77,37 @@ function generateConstellation(count) {
     const isMobile = window.innerWidth < 768;
 
     for (let i = 0; i < count; i++) {
+
         if (isMobile) {
+
+            const widths = [78, 62, 72];
+            const widthVW = widths[i % widths.length];
+
+            const size = window.innerWidth * (widthVW / 100);
+
+            const x = i % 2 === 0
+                ? 20
+                : window.innerWidth - size - 20;
+
             positions.push({
-                x: center - 110, 
-                y: 220 + i * 360 // Espaciado inicial un poco más abajo para no chocar con el logo al inicio
+                x,
+                y: 240 + i * 430
             });
+
         } else {
+
             const wave = Math.sin(i * 1.15) * 220;
+
             positions.push({
-                x: center + wave - 160, 
-                y: 300 + i * 450 // Da espacio al logo en la pantalla de inicio
+                x: center + wave - 160,
+                y: 300 + i * 450
             });
+
         }
     }
+
     return positions;
 }
-
 // ==========================================
 // RENDERIZAR OBRAS (Con soporte Responsive real)
 // ==========================================
@@ -100,15 +115,26 @@ function renderArtworks(artworks) {
     archive.innerHTML = ""; 
     const constellation = generateConstellation(artworks.length);
     
-    const spacing = window.innerWidth < 768 ? 380 : 500;
-    archive.style.minHeight = `${artworks.length * spacing}px`;
+const spacing = window.innerWidth < 768 ? 430 : 500;    archive.style.minHeight = `${artworks.length * spacing}px`;
 
     artworks.forEach((art, index) => {
         const card = document.createElement("div");
         card.classList.add("art");
 
-        const baseSize = window.innerWidth < 768 ? 220 : 280;
-        const size = baseSize + Math.sin(index) * 30 + Math.random() * 20;
+        let size;
+
+if (window.innerWidth < 768) {
+
+    const mobileSizes = [78, 62, 72];
+
+    size = window.innerWidth * (mobileSizes[index % mobileSizes.length] / 100);
+
+} else {
+
+    const baseSize = 280;
+    size = baseSize + Math.sin(index) * 30 + Math.random() * 20;
+
+}
         
         card.style.width = `${size}px`;
         card.style.left = `${constellation[index].x}px`;
