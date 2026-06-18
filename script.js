@@ -138,12 +138,12 @@ function renderArtworks(artworks) {
 // Inicialización de Carga
 fetch("data/artworks.json")
     .then(res => res.json())
-    .then(artworks => {
-        artworksData = artworks;
-        initLogoSplitting();
-        renderArtworks(artworksData);
-        animateArtworks();
-    })
+    .then(data => {
+    artworksData = data.items; 
+    initLogoSplitting();
+    renderArtworks(artworksData);
+    animateArtworks();
+})
     .catch(err => console.error("Error cargando obras:", err));
 
 // Evento Resize Controlado (Debounce)

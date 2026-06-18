@@ -1,6 +1,7 @@
 backend:
   name: github
   repo: sarpunked/moon-archive
+  branch: main
 
 media_folder: "img"
 public_folder: "/img"
@@ -20,6 +21,14 @@ collections:
             widget: "list"
 
             fields:
-              - { label: "Título", name: "title", widget: "string" }
-              - { label: "Descripción", name: "description", widget: "text" }
-              - { label: "Imagen", name: "image", widget: "image" }
+              - label: "Título"
+                name: "title"
+                widget: "string"
+
+              - label: "Descripción"
+                name: "description"
+                widget: "text"
+
+              - label: "Imagen"
+                name: "image"
+                widget: "image"
