@@ -134,92 +134,91 @@ window.addEventListener("scroll", () => {
  *   agregando pequeñas variaciones para conservar el
  *   efecto de "constelación" y evitar una grilla rígida.
  */
-function generateConstellation(count) {
+function generateConstellation(artworks) {
 
     const positions = [];
-
-    const center = window.innerWidth / 2;
     const isMobile = window.innerWidth < 768;
 
-    for (let i = 0; i < count; i++) {
+    // ==========================
+    // MOBILE
+    // ==========================
+    if (isMobile) {
 
-        // ==========================
-        // DISTRIBUCIÓN MOBILE
-        // ==========================
-        if (isMobile) {
+        let currentY = 220;
+
+        artworks.forEach((art, index) => {
 
             const widths = [78, 62, 72];
+            const widthVW = widths[index % widths.length];
 
-            const widthVW = widths[i % widths.length];
-
-            const size =
+            const width =
                 window.innerWidth * (widthVW / 100);
 
             const x =
-                i % 2 === 0
+                index % 2 === 0
                     ? 20
-                    : window.innerWidth - size - 20;
+                    : window.innerWidth - width - 20;
 
             positions.push({
                 x,
-                y: 240 + i * 430
+                y: currentY,
+                width
             });
 
-        }
+            // Espacio real
+            currentY += width * 1.4 + 60;
+        });
 
-        // ==========================
-        // DISTRIBUCIÓN DESKTOP
-        // ==========================
-        else {
+    }
 
-            // Cantidad de obras por fila
-            const columns = 3;
+    // ==========================
+    // DESKTOP
+    // ==========================
+    else {
 
-            // Separación horizontal entre columnas
-            const horizontalSpacing = 420;
+        const center = window.innerWidth / 2;
 
-            // Separación vertical entre filas
-            const verticalSpacing = 500;
+        const columns = [
+            center - 500,
+            center - 180,
+            center + 180
+        ];
 
-            // Columna actual (0, 1, 2...)
-            const col = i % columns;
+        const desktopSizes = [320, 420, 360, 390];
 
-            // Fila actual (0, 1, 2...)
-            const row = Math.floor(i / columns);
+        const columnHeights = [350, 550, 450];
 
-            /*
-             * Calcula el punto inicial para que
-             * las columnas queden centradas.
-             */
-            const startX =
-                center -
-                ((columns - 1) * horizontalSpacing) / 2;
+        artworks.forEach((art, index) => {
 
-            /*
-             * Pequeñas variaciones aleatorias
-             * para mantener el aspecto de
-             * constelación y evitar una grilla perfecta.
-             */
-            const randomX = Math.random() * 80 - 40;
-            const randomY = Math.random() * 60 - 30;
+            const size =
+                desktopSizes[index % desktopSizes.length];
+
+            // Buscar la columna más alta
+            let targetColumn = 0;
+
+            for (let i = 1; i < columnHeights.length; i++) {
+
+                if (
+                    columnHeights[i] <
+                    columnHeights[targetColumn]
+                ) {
+                    targetColumn = i;
+                }
+            }
 
             positions.push({
-                x:
-                    startX +
-                    col * horizontalSpacing +
-                    randomX,
-
-                y:
-                    350 +
-                    row * verticalSpacing +
-                    randomY
+                x: columns[targetColumn],
+                y: columnHeights[targetColumn],
+                width: size
             });
-        }
+
+            // Reservar espacio
+            columnHeights[targetColumn] += size * 1.4 + 100;
+        });
     }
 
     return positions;
 }
-
 
 /* ==========================================================
    RENDERIZADO DE LAS OBRAS
@@ -234,7 +233,7 @@ function renderArtworks(artworks) {
     archive.innerHTML = "";
 
     const constellation =
-        generateConstellation(artworks.length);
+        generateConstellation(artworks);
 
 
     const spacing =
