@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>moon ────୨ৎ────</title>
+    <title>moon ────୨ৎ──── </title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon"
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 
-     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
 <body>
@@ -42,24 +41,28 @@
     </div>
 </div>
 
-<footer>
+<footer class="contact-links">
     <a href="https://www.instagram.com/m.oo.n.artevisual/" target="_blank">
-        instagram
+        Instagram
     </a>
+
+    <span>·</span>
 
     <a href="https://wa.me/5493584299234" target="_blank">
-        whatsapp
+        WhatsApp
     </a>
 
+    <span>·</span>
+
     <a href="mailto:caraffalucila@gmail.com">
-        mail
+        Mail
     </a>
 </footer>
 
-<!-- Tu JavaScript principal -->
+
 <script src="script.js"></script>
 
-<!-- Netlify Identity -->
+
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
 <script>
@@ -72,7 +75,6 @@ if (window.netlifyIdentity) {
         }
     });
 
-    // Corrige los enlaces de invitación y recuperación
     window.netlifyIdentity.on("init", user => {
         if (!user && window.location.hash.includes("invite_token")) {
             window.netlifyIdentity.open("signup");
