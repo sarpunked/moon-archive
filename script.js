@@ -134,91 +134,6 @@ window.addEventListener("scroll", () => {
  *   agregando pequeñas variaciones para conservar el
  *   efecto de "constelación" y evitar una grilla rígida.
  */
-function generateConstellation(artworks) {
-
-    const positions = [];
-    const isMobile = window.innerWidth < 768;
-
-    // ==========================
-    // MOBILE
-    // ==========================
-    if (isMobile) {
-
-        let currentY = 220;
-
-        artworks.forEach((art, index) => {
-
-            const widths = [78, 62, 72];
-            const widthVW = widths[index % widths.length];
-
-            const width =
-                window.innerWidth * (widthVW / 100);
-
-            const x =
-                index % 2 === 0
-                    ? 20
-                    : window.innerWidth - width - 20;
-
-            positions.push({
-                x,
-                y: currentY,
-                width
-            });
-
-            // Espacio real
-            currentY += width * 1.4 + 60;
-        });
-
-    }
-
-    // ==========================
-    // DESKTOP
-    // ==========================
-    else {
-
-        const center = window.innerWidth / 2;
-
-        const columns = [
-            center - 500,
-            center - 180,
-            center + 180
-        ];
-
-        const desktopSizes = [320, 420, 360, 390];
-
-        const columnHeights = [350, 550, 450];
-
-        artworks.forEach((art, index) => {
-
-            const size =
-                desktopSizes[index % desktopSizes.length];
-
-            // Buscar la columna más alta
-            let targetColumn = 0;
-
-            for (let i = 1; i < columnHeights.length; i++) {
-
-                if (
-                    columnHeights[i] <
-                    columnHeights[targetColumn]
-                ) {
-                    targetColumn = i;
-                }
-            }
-
-            positions.push({
-                x: columns[targetColumn],
-                y: columnHeights[targetColumn],
-                width: size
-            });
-
-            // Reservar espacio
-            columnHeights[targetColumn] += size * 1.4 + 100;
-        });
-    }
-
-    return positions;
-}
 
 /* ==========================================================
    RENDERIZADO DE LAS OBRAS
@@ -228,141 +143,265 @@ function generateConstellation(artworks) {
  * Crea todas las tarjetas de obras
  * utilizando la información del JSON.
  */
-function renderArtworks(artworks) {
+async function renderArtworks(artworks) {
 
     archive.innerHTML = "";
 
-    const constellation =
-        generateConstellation(artworks);
+    const isMobile = window.innerWidth < 768;
 
+    /*
+     * Precargamos dimensiones reales
+     * para evitar superposiciones.
+     */
+    const dimensions = await Promise.all(
 
-    const spacing =
-        window.innerWidth < 768
-            ? 430
-            : 650;
+        artworks.map(art => {
+
+            return new Promise(resolve => {
+
+                const img = new Image();
+
+                img.src = art.image;
+
+                img.onload = () => {
+
+                    resolve({
+                        ratio: img.height / img.width
+                    });
+
+                };
+
+                img.onerror = () => {
+
+                    resolve({
+                        ratio: 1.3
+                    });
+                };
+            });
+        })
+    );
 
 
     /*
-     * Aumenta la altura mínima del contenedor
-     * para que haya espacio suficiente para hacer scroll.
+     * ==========================
+     * MOBILE
+     * ==========================
      */
-    archive.style.minHeight =
-        `${artworks.length * spacing + 400}px`;
+    if (isMobile) {
+
+        let currentY = 220;
+
+        artworks.forEach((art, index) => {
+
+            const mobileSizes = [78, 62, 72];
+
+            const size =
+                window.innerWidth *
+                (mobileSizes[index % mobileSizes.length] / 100);
+
+            const realHeight =
+                size * dimensions[index].ratio;
+
+            const mobileLeftMargin = 50;
+            const mobileRightMargin = 30;
+
+            const x =
+                index % 2 === 0
+                    ? mobileLeftMargin
+                    : window.innerWidth - size - mobileRightMargin;
+            createCard(
+                art,
+                index,
+                size,
+                x,
+                currentY
+            );
+
+            currentY += realHeight + 80;
+        });
+
+        archive.style.minHeight =
+            `${currentY + 150}px`;
+
+        return;
+    }
+
+
+    /*
+     * ==========================
+     * DESKTOP
+     * ==========================
+     */
+
+    const desktopSizes = [320, 420, 360, 390];
+
+    const columnsCount =
+        window.innerWidth > 1700
+            ? 4
+            : 3;
+
+    const columnWidth = 420;
+
+    const gap = 90;
+
+    const totalWidth =
+        columnsCount * columnWidth +
+        (columnsCount - 1) * gap;
+
+    const startX =
+        (window.innerWidth - totalWidth) / 2;
+
+    const columnHeights =
+        new Array(columnsCount).fill(340);
 
 
     artworks.forEach((art, index) => {
 
-        const card = document.createElement("div");
+        const size =
+            desktopSizes[index % desktopSizes.length];
 
-        card.classList.add("art");
-
-
-        let size;
-
-
-        // Tamaños responsivos
-        if (window.innerWidth < 768) {
-
-            const mobileSizes = [78, 62, 72];
-
-            size =
-                window.innerWidth *
-                (mobileSizes[index % mobileSizes.length] / 100);
-
-        } else {
-
-            const desktopSizes = [
-                320,
-                420,
-                360,
-                390
-            ];
-
-            size =
-                desktopSizes[index % desktopSizes.length];
-        }
-
-
-        card.style.width = `${size}px`;
-
-        card.style.left =
-            `${constellation[index].x}px`;
-
-        card.style.top =
-            `${constellation[index].y}px`;
-
-        card.dataset.index = index;
+        const realHeight =
+            size * dimensions[index].ratio;
 
 
         /*
-         * Versiones de imagen para responsive.
+         * Elegimos la columna más alta.
          */
-        const imgSmall =
-            art.image_small || art.image;
+        let target = 0;
 
-        const imgMedium =
-            art.image_medium || art.image;
+        for (let i = 1; i < columnsCount; i++) {
 
-        const imgLarge =
-            art.image;
-
-
-        card.innerHTML = `
-            <img
-                src="${imgMedium}"
-
-                srcset="
-                    ${imgSmall} 400w,
-                    ${imgMedium} 800w,
-                    ${imgLarge} 1200w
-                "
-
-                sizes="
-                    (max-width: 768px) 220px,
-                    320px
-                "
-
-                alt="${art.title}"
-
-                loading="lazy"
-            >
-        `;
+            if (
+                columnHeights[i] <
+                columnHeights[target]
+            ) {
+                target = i;
+            }
+        }
 
 
-        // Estrellas al pasar el mouse
-        card.addEventListener(
-            "mouseenter",
-            () => createStars(card)
+        /*
+         * Pequeños desvíos editoriales.
+         */
+        const randomX =
+    Math.random() * 120 - 60;
+
+const randomY =
+    Math.random() * 60 - 30;
+
+
+        const safeMargin =
+         window.innerWidth > 1600
+        ? 120
+        : 110;
+
+        let x =
+            startX +
+            target * (columnWidth + gap) +
+            randomX;
+
+        x = Math.max(
+            safeMargin,
+            Math.min(
+                x,
+                window.innerWidth - size - safeMargin
+            )
         );
 
-        // Abrir visor
-        card.addEventListener(
-            "click",
-            () => openArtwork(art)
+        const y =
+            columnHeights[target] +
+            randomY;
+
+
+        createCard(
+            art,
+            index,
+            size,
+            x,
+            y
         );
 
 
-        archive.appendChild(card);
+        /*
+         * Reservamos espacio REAL.
+         */
+        columnHeights[target] +=
+            realHeight + 120;
     });
+
+
+    archive.style.minHeight =
+        `${Math.max(...columnHeights) + 300}px`;
 }
 
+
+
+function createCard(art, index, size, x, y) {
+
+    const card = document.createElement("div");
+
+    card.classList.add("art");
+
+    card.style.width = `${size}px`;
+
+    card.style.left = `${x}px`;
+
+    card.style.top = `${y}px`;
+
+    card.dataset.index = index;
+
+    const imgSmall =
+        art.image_small || art.image;
+
+    const imgMedium =
+        art.image_medium || art.image;
+
+    const imgLarge =
+        art.image;
+
+    card.innerHTML = `
+        <img
+            src="${imgMedium}"
+            srcset="
+                ${imgSmall} 400w,
+                ${imgMedium} 800w,
+                ${imgLarge} 1200w
+            "
+            alt="${art.title}"
+            loading="lazy"
+        >
+    `;
+
+    card.addEventListener(
+        "mouseenter",
+        () => createStars(card)
+    );
+
+    card.addEventListener(
+        "click",
+        () => openArtwork(art)
+    );
+
+    archive.appendChild(card);
+}
 
 
 /* ==========================================================
    CARGA INICIAL DEL JSON
 ========================================================== */
-
 fetch("data/artworks.json")
 
     .then(res => res.json())
 
-    .then(data => {
+    .then(async data => {
 
         artworksData = data.items;
 
         initLogoSplitting();
 
-        renderArtworks(artworksData);
+        await renderArtworks(
+            artworksData
+        );
 
         animateArtworks();
     })
@@ -374,8 +413,6 @@ fetch("data/artworks.json")
             err
         );
     });
-
-
 
 /* ==========================================================
    RESIZE INTELIGENTE
@@ -392,11 +429,6 @@ let lastWidth = window.innerWidth;
 
 window.addEventListener("resize", () => {
 
-    /*
-     * En móviles ignoramos cambios de altura,
-     * ya que suelen deberse a la aparición
-     * del teclado o barra del navegador.
-     */
     if (window.innerWidth === lastWidth) {
         return;
     }
@@ -405,11 +437,13 @@ window.addEventListener("resize", () => {
 
     clearTimeout(resizeTimeout);
 
-    resizeTimeout = setTimeout(() => {
+    resizeTimeout = setTimeout(async () => {
 
         if (artworksData.length > 0) {
 
-            renderArtworks(artworksData);
+            await renderArtworks(
+                artworksData
+            );
         }
 
     }, 300);
