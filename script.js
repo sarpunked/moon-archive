@@ -40,9 +40,29 @@ let artworksData = [];
 
 
 function getCurrentCategory() {
+
+    /*
+     * Desarrollo local:
+     * index.html?category=arte
+     */
     const params = new URLSearchParams(window.location.search);
 
-    return params.get("category") || "archive";
+    const queryCategory = params.get("category");
+
+    if (queryCategory) {
+        return queryCategory;
+    }
+
+    /*
+     * Producción (Netlify):
+     * /arte
+     * /tatuajes
+     * /disenos
+     */
+    const path = window.location.pathname
+        .replace(/^\/|\/$/g, "");
+
+    return path || "archive";
 }
 
 
