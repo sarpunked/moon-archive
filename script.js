@@ -27,6 +27,43 @@ const moonLogo = document.querySelector(".moon-logo");
 let artworksData = [];
 
 
+/**
+ * Obtiene la categoría actual a partir de la URL.
+ *
+ * Ejemplos:
+ * "/"              → archive
+ * "/arte"          → arte
+ * "/tatuajes"      → tatuajes
+ * "/disenos"       → disenos
+ * "/artesanias"    → artesanias
+ */
+
+
+function getCurrentCategory() {
+    const params = new URLSearchParams(window.location.search);
+
+    return params.get("category") || "archive";
+}
+
+
+
+function getCategoryItems(category) {
+
+    // Archive muestra TODO
+    if (category === "archive") {
+        return artworksData;
+    }
+
+    // El resto filtra por categoría
+    return artworksData.filter(
+        art => art.category === category
+    );
+}
+
+
+
+
+
 
 /* ==========================================================
    EFECTO DEL LOGO "MOON"
@@ -124,6 +161,25 @@ window.addEventListener("scroll", () => {
 });
 
 
+
+function highlightCurrentCategory() {
+
+    const current = getCurrentCategory();
+
+    document
+        .querySelectorAll(".category-menu a[data-page]")
+        .forEach(link => {
+
+            link.classList.remove("active");
+
+            if (link.dataset.page === current) {
+
+                link.classList.add("active");
+
+            }
+        });
+}
+
 /**
  * Genera las posiciones de cada obra dentro del archivo.
  *
@@ -144,10 +200,22 @@ window.addEventListener("scroll", () => {
  * utilizando la información del JSON.
  */
 async function renderArtworks(artworks) {
+    const sideMargin = window.innerWidth < 768
+    ? 65
+    : 150;
 
     archive.innerHTML = "";
 
-    const isMobile = window.innerWidth < 768;
+    archive.classList.remove("gallery");
+
+   
+        const category = getCurrentCategory();
+
+    const isArchive =
+        category === "archive";
+
+    const isMobile =
+        window.innerWidth < 768;
 
     /*
      * Precargamos dimensiones reales
@@ -180,6 +248,20 @@ async function renderArtworks(artworks) {
             });
         })
     );
+    if (!isArchive) {
+
+    archive.classList.add("gallery");
+
+    artworks.forEach((art) => {
+
+        createGalleryCard(art);
+
+    });
+
+    archive.style.minHeight = "auto";
+
+    return;
+}
 
 
     /*
@@ -202,8 +284,8 @@ async function renderArtworks(artworks) {
             const realHeight =
                 size * dimensions[index].ratio;
 
-            const mobileLeftMargin = 50;
-            const mobileRightMargin = 30;
+            const mobileLeftMargin = sideMargin;
+            const mobileRightMargin = sideMargin;
 
             const x =
                 index % 2 === 0
@@ -290,11 +372,7 @@ const randomY =
     Math.random() * 60 - 30;
 
 
-        const safeMargin =
-         window.innerWidth > 1600
-        ? 120
-        : 110;
-
+        const safeMargin = sideMargin;
         let x =
             startX +
             target * (columnWidth + gap) +
@@ -386,6 +464,35 @@ function createCard(art, index, size, x, y) {
 }
 
 
+function createGalleryCard(art) {
+
+    const card = document.createElement("div");
+
+    card.classList.add("gallery-art");
+
+    card.innerHTML = `
+        <img
+            src="${art.image}"
+            alt="${art.title}"
+            loading="lazy"
+        >
+    `;
+
+    card.addEventListener(
+        "mouseenter",
+        () => createStars(card)
+    );
+
+    card.addEventListener(
+        "click",
+        () => openArtwork(art)
+    );
+
+    archive.appendChild(card);
+}
+
+
+
 /* ==========================================================
    CARGA INICIAL DEL JSON
 ========================================================== */
@@ -396,14 +503,18 @@ fetch("data/artworks.json")
     .then(async data => {
 
         artworksData = data.items;
+        highlightCurrentCategory();
 
         initLogoSplitting();
 
-        await renderArtworks(
-            artworksData
-        );
+     
+        const category = getCurrentCategory();
 
-        animateArtworks();
+        await renderArtworks(
+        getCategoryItems(category)
+    );
+
+    animateArtworks();
     })
 
     .catch(err => {
@@ -441,10 +552,12 @@ window.addEventListener("resize", () => {
 
         if (artworksData.length > 0) {
 
-            await renderArtworks(
-                artworksData
-            );
-        }
+           const category = getCurrentCategory();
+
+        await renderArtworks(
+            getCategoryItems(category)
+        );
+                }
 
     }, 300);
 });

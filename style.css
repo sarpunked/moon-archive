@@ -1,6 +1,3 @@
-/* ==========================================
-   VARIABLES Y CONFIGURACIÓN BASE
-   ========================================== */
 :root {
     --bg: #faf7f2;
     --text: #2f2f2f;
@@ -62,14 +59,14 @@ body {
 
 .moon-logo {
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10; /* Z-index bajo el visor pero visible arriba de la galería base */
+    z-index: 10; 
     font-family: 'Instrument Serif', serif;
-font-size: clamp(4rem,7vw,7rem);
+    font-size: clamp(4rem,7vw,7rem);
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
     will-change: transform, opacity; /* Forzar renderizado por GPU */
     user-select: none;
 }
@@ -81,8 +78,6 @@ font-size: clamp(4rem,7vw,7rem);
     position: relative;
     min-height: 520vh;
 }
-
-
 
 
 * {
@@ -282,19 +277,11 @@ img {
 
     .moon-logo {
         font-size: 4rem;
-        top: 25px;
+        top: 10px;
     }
 
     .archive {
         padding-top: 120px;
-    }
-
-    .art {
-        transition: opacity .5s ease;
-    }
-
-    .art img {
-        border-radius: 32px;
     }
 
     .viewer {
@@ -306,17 +293,12 @@ img {
         border-radius: 24px;
     }
 
-    .viewer-info {
-        margin-top: 24px;
-    }
-
     .viewer-info h2 {
         font-size: 2rem;
     }
 
     .viewer-info p {
         font-size: .95rem;
-        line-height: 1.7;
     }
 
     .close-btn {
@@ -325,46 +307,34 @@ img {
         font-size: 2.5rem;
     }
 
-   ..contact-links {
-        position: fixed;
+    /* CONTACTOS */
+    .contact-links {
+        left: -175px;
+        top: 50%;
 
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: auto;
+        transform:
+            translateY(-50%)
+            rotate(-90deg);
 
+        gap: 10px;
 
-        transform: none;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 14px;
-
-        width: 100%;
-
-        padding: 10px 16px;
-
-        background: rgba(250, 247, 242, 0.78);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
-
-        z-index: 1000;
+        font-size: 0.65rem;
+        letter-spacing: 0.08em;
     }
 
-    .contact-links a,
-    .contact-links span {
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        white-space: nowrap;
-        opacity: 0.75;
-    }
+    /* CATEGORÍAS */
+    .category-menu {
+        right: -175px;
+        top: 50%;
 
-    .contact-links a:hover {
-        opacity: 1;
+        transform:
+            translateY(-50%)
+            rotate(90deg);
+
+        gap: 10px;
+
+        font-size: 0.65rem;
+        letter-spacing: 0.08em;
     }
 
     .cursor {
@@ -374,7 +344,12 @@ img {
     .bubble:nth-child(n+3) {
         display: none;
     }
+    
 }
+
+
+
+
 /* ==========================================
    CONTACTO LATERAL EDITORIAL
    ========================================== */
@@ -382,12 +357,15 @@ img {
 .contact-links {
     position: fixed;
 
-    left: -210px;
     top: 50%;
+    left: 1rem;
 
     transform:
         translateY(-50%)
+        translateX(-50%)
         rotate(-90deg);
+
+    transform-origin: center;
 
     z-index: 1000;
 
@@ -397,6 +375,8 @@ img {
 
     font-size: 0.9rem;
     letter-spacing: 0.12em;
+
+    white-space: nowrap;
 }
 
 .contact-links a,
@@ -413,3 +393,115 @@ img {
 .contact-links a:hover {
     opacity: 1;
 }
+
+/* ==========================================
+   MENÚ DE CATEGORÍAS
+
+
+   ========================================== */
+
+.category-menu {
+    position: fixed;
+
+    top: 50%;
+    right: 1rem;
+
+    transform:
+        translateY(-50%)
+        translateX(50%)
+        rotate(90deg);
+
+    transform-origin: center;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+
+    white-space: nowrap;
+}
+
+
+
+
+.category-menu a,
+.category-menu span {
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    opacity: .45;
+
+    transition: opacity .3s ease;
+}
+
+.category-menu a:hover {
+
+    opacity: 1;
+}
+.category-menu a.active {
+
+    opacity: 1;
+    
+    background-color: #fec9ef;
+}
+
+
+
+
+
+.gallery {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 32px;
+
+    max-width: 1400px;
+
+    margin: 220px auto 120px;
+
+    /* espacio reservado para los laterales */
+    padding-left: 140px;
+    padding-right: 140px;
+
+    min-height: auto !important;
+}
+
+.gallery-art {
+
+    position: relative;
+}
+
+.gallery-art img {
+
+    width: 100%;
+
+    display: block;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 30px 60px rgba(0,0,0,.08);
+
+    transition:
+        transform .5s ease,
+        filter .5s ease;
+}
+
+.gallery-art:hover img {
+
+    transform: scale(1.02);
+
+    filter: brightness(1.03);
+}
+
+
+
+    

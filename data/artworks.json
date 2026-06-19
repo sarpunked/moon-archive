@@ -1,44 +1,52 @@
 {
   "items": [
     {
-      "image": "/img/obra1.jpg",
+      "image": "img/obra1.jpg",
       "title": "Obra I",
-      "description": "boca vomita organica"
+      "description": "boca vomita organica",
+      "category": "arte"
     },
     {
-      "image": "/img/obra2.jpg",
+      "image": "img/obra2.jpg",
       "title": "Obra II",
-      "description": "..."
+      "description": "...",
+      "category": "tatuajes"
     },
     {
-      "image": "/img/obra3.jpg",
+      "image": "img/obra3.jpg",
       "title": "Obra III",
-      "description": "..."
+      "description": "...",
+      "category": "disenos"
     },
     {
-      "image": "/img/obra4.jpg",
+      "image": "img/obra4.jpg",
       "title": "Obra IV",
-      "description": "..."
+      "description": "...",
+      "category": "artesanias"
     },
     {
-      "image": "/img/obra5.jpg",
+      "image": "img/obra5.jpg",
       "title": "Obra V",
-      "description": "..."
+      "description": "...",
+      "category": "arte"
     },
     {
-      "image": "/img/obra6.jpg",
+      "image": "img/obra6.jpg",
       "title": "Obra VI",
-      "description": "..."
+      "description": "...",
+      "category": "tatuajes"
     },
     {
-      "image": "/img/obra7.jpg",
+      "image": "img/obra7.jpg",
       "title": "Obra VII",
-      "description": "..."
+      "description": "...",
+      "category": "disenos"
     },
     {
       "title": "Obra VIIII",
       "description": "aguante luci",
-      "image": "/img/681490304_18031742759800893_6641243509152623734_n.jpg"
+      "image": "img/681490304_18031742759800893_6641243509152623734_n.jpg",
+      "category": "arte"
     }
   ]
 }

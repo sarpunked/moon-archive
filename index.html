@@ -1,12 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>moon ────୨ৎ──── </title>
+    <title>moon ────୨ৎ────</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -16,86 +18,154 @@
 
 <body>
 
-<pre class="ascii-bg">
-</pre>
+    <pre class="ascii-bg"></pre>
 
-<div class="background-glow"></div>
-<div class="cursor">♡</div>
+    <div class="background-glow"></div>
 
-<header>
-    <div class="moon-logo">moon</div>
-</header>
+    <div class="cursor">♡</div>
 
-<main id="archive" class="archive"></main>
+    <header>
+        <div class="moon-logo">moon</div>
+    </header>
 
-<div id="viewer" class="viewer hidden">
-    <div class="viewer-content">
-        <button id="closeViewer" class="close-btn">&times;</button>
+    <!-- MENÚ DE CATEGORÍAS -->
+    <nav class="category-menu">
 
-        <img id="viewerImage" src="" alt="">
+        <a>
+            ⋅°❀⋆.ೃ࿔*
+        </a>
 
-        <div class="viewer-info">
-            <h2 id="viewerTitle"></h2>
-            <p id="viewerDescription"></p>
+        <a href="/" data-page="archive">
+            Archive
+        </a>
+
+        <span>·</span>
+
+        <a href="/arte" data-page="arte">
+            Arte
+        </a>
+
+        <span>·</span>
+
+        <a href="/artesanias" data-page="artesanias">
+            Artesanías
+        </a>
+
+        <span>·</span>
+
+        <a href="/tatuajes" data-page="tatuajes">
+            Tatuajes
+        </a>
+
+        <span>·</span>
+
+        <a href="/disenos" data-page="disenos">
+            Diseños
+        </a>
+
+        <a>
+            ⋅°❀⋆.ೃ࿔*
+        </a>
+
+    </nav>
+
+    <!-- CONTENEDOR DE OBRAS -->
+    <main id="archive" class="archive"></main>
+
+    <!-- VISOR -->
+    <div id="viewer" class="viewer hidden">
+
+        <div class="viewer-content">
+
+            <button id="closeViewer" class="close-btn">
+                &times;
+            </button>
+
+            <img id="viewerImage" src="" alt="">
+
+            <div class="viewer-info">
+
+                <h2 id="viewerTitle"></h2>
+
+                <p id="viewerDescription"></p>
+
+            </div>
+
         </div>
+
     </div>
-</div>
 
-<footer class="contact-links">
+    <!-- FOOTER -->
+    <footer class="contact-links">
 
-    <a >
-        ⋅°❀⋆.ೃ࿔*
-    </a>
+        <a>
+            ⋅°❀⋆.ೃ࿔*
+        </a>
 
-    <a href="https://www.instagram.com/m.oo.n.artevisual/" target="_blank">
-        Instagram
-    </a>
+        <a href="https://www.instagram.com/m.oo.n.artevisual/" target="_blank" rel="noopener noreferrer">
+            Instagram
+        </a>
 
-    <span>·</span>
+        <span>·</span>
 
-    <a href="https://wa.me/5493584299234" target="_blank">
-        WhatsApp
-    </a>
+        <a href="https://wa.me/5493584299234" target="_blank" rel="noopener noreferrer">
+            WhatsApp
+        </a>
 
-    <span>·</span>
+        <span>·</span>
 
-    <a href="mailto:caraffalucila@gmail.com">
-        Mail
-    </a>
-    <span>·</span>
+        <a href="mailto:caraffalucila@gmail.com">
+            Mail
+        </a>
 
-    <a >
-        . ݁₊ ⊹ . ݁ ꣑ৎ ݁ . ⊹ ₊ ݁.
-    </a>
-</footer>
+        <span>·</span>
 
+        <a>
+            . ݁₊ ⊹ . ݁ ꣑ৎ ݁ . ⊹ ₊ ݁.
+        </a>
 
-<script src="script.js"></script>
+    </footer>
 
+    <script src="script.js"></script>
 
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-<script>
-if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-        if (!user) {
-            window.netlifyIdentity.on("login", () => {
-                document.location.href = "/admin/";
+    <script>
+        if (window.netlifyIdentity) {
+
+            window.netlifyIdentity.on("init", user => {
+
+                if (!user) {
+
+                    window.netlifyIdentity.on("login", () => {
+
+                        document.location.href = "/admin/";
+
+                    });
+
+                }
+
             });
-        }
-    });
 
-    window.netlifyIdentity.on("init", user => {
-        if (!user && window.location.hash.includes("invite_token")) {
-            window.netlifyIdentity.open("signup");
-        }
+            window.netlifyIdentity.on("init", user => {
 
-        if (!user && window.location.hash.includes("recovery_token")) {
-            window.netlifyIdentity.open("login");
+                if (!user && window.location.hash.includes("invite_token")) {
+
+                    window.netlifyIdentity.open("signup");
+
+                }
+
+                if (!user && window.location.hash.includes("recovery_token")) {
+
+                    window.netlifyIdentity.open("login");
+
+                }
+
+            });
+
         }
-    });
-}
-</script>
+    </script>
 
 </body>
 </html>
+
