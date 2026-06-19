@@ -295,7 +295,7 @@ async function renderArtworks(artworks) {
 
         artworks.forEach((art, index) => {
 
-            const mobileSizes = [78, 62, 72];
+            const mobileSizes = [65, 55, 60];
 
             const size =
                 window.innerWidth *
