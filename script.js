@@ -291,7 +291,7 @@ async function renderArtworks(artworks) {
      */
     if (isMobile) {
 
-        let currentY = 220;
+        let currentY = 80;
 
         artworks.forEach((art, index) => {
 
