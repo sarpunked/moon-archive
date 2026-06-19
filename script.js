@@ -272,18 +272,20 @@ async function renderArtworks(artworks) {
 
     archive.classList.add("gallery");
 
+    if (window.innerWidth < 768) {
+        archive.classList.add("gallery-mobile");
+    } else {
+        archive.classList.remove("gallery-mobile");
+    }
+
     artworks.forEach((art) => {
-
         createGalleryCard(art);
-
     });
 
     archive.style.minHeight = "auto";
 
     return;
 }
-
-
     /*
      * ==========================
      * MOBILE

@@ -344,21 +344,16 @@ img {
     .bubble:nth-child(n+3) {
         display: none;
     }
-    .gallery {
+ .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 32px;
 
-        grid-template-columns: 1fr;
-        
+    max-width: 1400px;
+    margin: 220px auto 120px;
 
-        max-width: 100%;
-
-        
-        margin: 80px auto 60px;
-
-        padding-left: 25px;
-        padding-right: 25px;
-
-        gap: 24px;
-    }
+    padding-inline: clamp(20px, 5vw, 140px);
+}
 
     
 }
@@ -521,3 +516,44 @@ img {
 
 
     
+
+
+ .gallery-mobile {
+
+        display: flex !important;
+        flex-direction: column;
+
+        align-items: center;
+
+        width: 100%;
+
+        margin-top: 120px;
+        margin-bottom: 80px;
+
+        padding-left: 70px;
+        padding-right: 70px;
+
+        gap: 24px;
+
+        min-height: auto !important;
+    }
+
+    .gallery-mobile .gallery-art {
+
+        width: 100%;
+        max-width: 320px;
+
+        position: relative;
+
+        left: auto !important;
+        top: auto !important;
+
+        transform: none !important;
+    }
+
+    .gallery-mobile .gallery-art img {
+
+        width: 100%;
+        height: auto;
+        display: block;
+    }
