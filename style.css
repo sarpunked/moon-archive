@@ -344,6 +344,20 @@ img {
     .bubble:nth-child(n+3) {
         display: none;
     }
+    .gallery {
+
+        grid-template-columns: 1fr;
+
+        max-width: 100%;
+
+        margin: 120px auto 80px;
+
+        padding-left: 25px;
+        padding-right: 25px;
+
+        gap: 24px;
+    }
+
     
 }
 
