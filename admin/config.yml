@@ -23,3 +23,12 @@ collections:
               - { label: "Título", name: "title", widget: "string" }
               - { label: "Descripción", name: "description", widget: "text" }
               - { label: "Imagen", name: "image", widget: "image" }
+              - label: "Categoría"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "Arte", value: "arte" }
+                  - { label: "Tatuajes", value: "tatuajes" }
+                  - { label: "Diseños", value: "disenos" }
+                  - { label: "Artesanías", value: "artesanias" }
+                default: "arte"
