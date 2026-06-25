@@ -2,51 +2,57 @@
   "items": [
     {
       "image": "img/obra1.jpg",
-      "title": "Obra I",
-      "description": "boca vomita organica",
-      "category": "arte"
+      "title": "Vómito ",
+      "description": "tatuaje para Cami \ndiseño hecho en base a un flash en un encuentro de dibujo ",
+      "category": "tatuajes"
     },
     {
       "image": "img/obra2.jpg",
-      "title": "Obra II",
-      "description": "...",
+      "title": "well i wonder ",
+      "description": "tatuaje para Emi \ndiseño inspirado en la canción Well I wonder de The Smiths ",
       "category": "tatuajes"
     },
     {
       "image": "img/obra3.jpg",
-      "title": "Obra III",
-      "description": "...",
+      "title": "Diseños ",
+      "description": "…",
       "category": "disenos"
     },
     {
       "image": "img/obra4.jpg",
-      "title": "Obra IV",
-      "description": "...",
-      "category": "artesanias"
+      "title": "flores de colores ",
+      "description": "tatuaje para Rebe \ndiseño de flor a partir de referencias de su gusto ",
+      "category": "tatuajes"
     },
     {
       "image": "img/obra5.jpg",
-      "title": "Obra V",
-      "description": "...",
-      "category": "arte"
+      "title": "biología ",
+      "description": "araña para Cande \nen su búsqueda como bióloga opta por el tatuaje de aquello que reconoce en nuestra tierra",
+      "category": "tatuajes"
     },
     {
       "image": "img/obra6.jpg",
-      "title": "Obra VI",
-      "description": "...",
+      "title": "Flores",
+      "description": "tatuaje para Agus \ndiseño propio a partir de inspiración de internet ",
       "category": "tatuajes"
     },
     {
       "image": "img/obra7.jpg",
-      "title": "Obra VII",
-      "description": "...",
+      "title": "Flores de colores",
+      "description": "tatuaje para Sara \na partir de un tatuaje publicado en instagram hicimos esta flor con varios colores ",
+      "category": "tatuajes"
+    },
+    {
+      "title": "Diseños",
+      "description": "…",
+      "image": "img/681490304_18031742759800893_6641243509152623734_n.jpg",
       "category": "disenos"
     },
     {
-      "title": "Obra VIIII",
-      "description": "aguante luci",
-      "image": "img/681490304_18031742759800893_6641243509152623734_n.jpg",
-      "category": "arte"
+      "category": "tatuajes",
+      "image": "/img/img_0361.jpeg",
+      "title": "nadando ",
+      "description": "tatuaje para Giulia \na ella le gusta mucho nadar y juntas creamos este diseño para su pie "
     }
   ]
 }
