@@ -3,13 +3,13 @@
     {
       "image": "img/obra1.jpg",
       "title": "Vómito ",
-      "description": "tatuaje para Cami \ndiseño hecho en base a un flash en un encuentro de dibujo ",
+      "description": "tatuaje para Cami,\ndiseño hecho en base a un flash en un encuentro de dibujo ",
       "category": "tatuajes"
     },
     {
       "image": "img/obra2.jpg",
       "title": "well i wonder ",
-      "description": "tatuaje para Emi \ndiseño inspirado en la canción Well I wonder de The Smiths ",
+      "description": "tatuaje para Emi,\ndiseño inspirado en la canción Well I wonder de The Smiths ",
       "category": "tatuajes"
     },
     {
@@ -21,25 +21,25 @@
     {
       "image": "img/obra4.jpg",
       "title": "flores de colores ",
-      "description": "tatuaje para Rebe \ndiseño de flor a partir de referencias de su gusto ",
+      "description": "tatuaje para Rebe,\ndiseño de flor a partir de referencias de su gusto ",
       "category": "tatuajes"
     },
     {
       "image": "img/obra5.jpg",
       "title": "biología ",
-      "description": "araña para Cande \nen su búsqueda como bióloga opta por el tatuaje de aquello que reconoce en nuestra tierra",
+      "description": "araña para Cande,\nen su búsqueda como bióloga opta por el tatuaje de aquello que reconoce en nuestra tierra",
       "category": "tatuajes"
     },
     {
       "image": "img/obra6.jpg",
       "title": "Flores",
-      "description": "tatuaje para Agus \ndiseño propio a partir de inspiración de internet ",
+      "description": "tatuaje para Agus, \ndiseño propio a partir de inspiración de internet ",
       "category": "tatuajes"
     },
     {
       "image": "img/obra7.jpg",
       "title": "Flores de colores",
-      "description": "tatuaje para Sara \na partir de un tatuaje publicado en instagram hicimos esta flor con varios colores ",
+      "description": "tatuaje para Sara,\na partir de un tatuaje publicado en instagram, hicimos esta flor con varios colores ",
       "category": "tatuajes"
     },
     {
@@ -52,7 +52,7 @@
       "category": "tatuajes",
       "image": "/img/img_0361.jpeg",
       "title": "nadando ",
-      "description": "tatuaje para Giulia \na ella le gusta mucho nadar y juntas creamos este diseño para su pie "
+      "description": "tatuaje para Giulia,\na ella le gusta mucho nadar y juntas creamos este diseño para su pie "
     },
     {
       "category": "tatuajes",
@@ -64,31 +64,37 @@
       "category": "tatuajes",
       "image": "/img/img_7009.jpeg",
       "title": "construcción de plexo ",
-      "description": "tatuajes delanteros \npara mi hermano \ndesde la construcción de formas orgánicas por la clavícula hasta un sol en el centro que denota por abajo la palabra “Vida”, inspirado en el álbum “Vida” de Sui Generis \nhojas de laurel en máquina en ambos costados y los más recientes por debajo del abdomen, jaguares en espejo "
+      "description": "tatuajes delanteros\npara mi hermano, \ndesde la construcción de formas orgánicas por la clavícula hasta un sol en el centro que denota por abajo la palabra “Vida”, inspirado en el álbum “Vida” de Sui Generis,\nhojas de laurel en máquina en ambos costados y los más recientes por debajo del abdomen, jaguares en espejo "
     },
     {
       "category": "tatuajes",
       "image": "/img/img_6448.jpeg",
       "title": "pies bailando",
-      "description": "tatuajes en empeine y tobillos para Cami \nideas de diseños que ella me trajo y yo les di mi estilo característico de puntillismo propio de la técnica de Handpoke \n "
+      "description": "tatuajes en empeine y tobillos para Cami, \nideas de diseños que ella me trajo y yo les di mi estilo característico de puntillismo propio de la técnica de Handpoke \n "
     },
     {
       "category": "tatuajes",
       "image": "/img/img_6908.jpeg",
       "title": "casco estrellado ",
-      "description": "tatuaje para Joaco \nel vino con la idea de que a un casco de estilo medieval se le desprendieran rayos de la cara \neste fue mi diseño en base a su idea \nde los mejores tatuajes que hice "
+      "description": "tatuaje para Joaco,\nvino con la idea de que a un casco de estilo medieval se le desprendieran rayos de la cara, \neste fue mi diseño en base a su idea, de los mejores tatuajes que hice "
     },
     {
       "category": "arte",
       "image": "/img/img_5451.jpeg",
       "title": "payasadas",
-      "description": "💭\nAcrílico sobre papel obra 220gr tamaño A3\ndibujo urgente\nhecho en 1 hs bajo la luz de las velas con un amigo \n\ncomparto lo que voy creando acá también para tener un registro estilo portfolio de las obras "
+      "description": "💭\nAcrílico sobre papel obra 220gr tamaño A3,\ndibujo urgente,\nhecho en 1 hs bajo la luz de las velas con un amigo,\n\ncomparto lo que voy creando acá también para tener un registro estilo portfolio de las obras "
     },
     {
       "category": "arte",
       "title": "atrapando lo orgánico ",
-      "description": "tatuaje para Cami\nde los más de 10 que se ha hecho conmigo \nen este caso es un diseño mío \nde mi característica estrella/neurona orgánica que utilizo como signo repetitivo en mi obra \nme encantó la elección del lugar ",
+      "description": "tatuaje para Cami,\nde los más de 10 que se ha hecho conmigo \nen este caso es un diseño mío,\nde mi característica estrella/neurona orgánica que utilizo como signo repetitivo en mi obra, \nme encantó la elección del lugar ",
       "image": "/img/img_6636.jpeg"
+    },
+    {
+      "category": "disenos",
+      "image": "/img/camscanner-10-7-26-14.47-1-_1.jpeg",
+      "title": "Diseños",
+      "description": "disponible para tatuar "
     }
   ]
 }
